@@ -1,0 +1,2 @@
+const {geocodeRegion,kmaForecast}=require('../lib/external');
+module.exports=async function handler(req,res){res.setHeader('Cache-Control','s-maxage=600, stale-while-revalidate=1200');try{const region=String(req.query.region||'').trim();if(!region)return res.status(400).json({error:'region required'});const c=await geocodeRegion(region);const weather=await kmaForecast(c.y,c.x,req.query.date,req.query.time||'15:00');res.status(200).json({center:c,weather})}catch(e){res.status(e.status||500).json({error:e.message})}}
