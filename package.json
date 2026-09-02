@@ -1,7 +1,0 @@
-{
-  "name": "date-os-v3",
-  "version": "0.3.0",
-  "private": true,
-  "engines": {"node": ">=18"},
-  "scripts": {"dev": "node local-server.js"}
-}
