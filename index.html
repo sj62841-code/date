@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#ffffff" />
-<title>모먼트 v33 · First 5 Minutes Clean Build</title>
+<title>모먼트 v38 · Place Provider Bridge</title>
 <style>
 
 :root{
@@ -386,6 +386,13 @@ body.v33-keyboard-open .bottom-nav{display:none}body.v33-keyboard-open .scroll{b
 .v33-qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.v33-qa-grid button{min-height:70px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:12px;text-align:left;font-size:12px;font-weight:760}.v33-qa-grid button small{display:block;color:var(--sub);font-weight:550;margin-top:5px;line-height:1.4}.v33-qa-active{border-color:#17181a!important;box-shadow:0 0 0 1px #17181a inset}
 .v33-save-error-sheet{position:absolute;inset:0;z-index:300;background:rgba(0,0,0,.24);display:flex;align-items:flex-end}.v33-save-error-card{width:100%;background:#fff;border-radius:24px 24px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));animation:v33SheetUp .25s var(--ease-out)}.v33-save-error-card h3{font-size:20px;margin:2px 0 7px}.v33-save-error-card p{font-size:12px;color:var(--sub);line-height:1.55}.v33-save-error-card button{width:100%;height:50px;border:0;border-radius:14px;background:#17181a;color:#fff;font-size:13px;font-weight:800;margin-top:12px}
 </style>
+
+<style id="v38-provider-polish">
+.v38-data-note{margin-top:11px;font-size:10.5px;line-height:1.5;color:var(--muted)}
+.v38-provider-card{margin-top:22px;padding:17px;border:1px solid var(--line);border-radius:18px;background:#f8f9fa}
+.v38-provider-card b{display:block;font-size:14px}.v38-provider-card p{margin:6px 0 0;font-size:11.5px;line-height:1.55;color:var(--sub)}
+.v38-provider-card code{display:block;margin-top:11px;padding:10px 11px;border-radius:11px;background:#fff;border:1px solid var(--line);font-size:10.5px;line-height:1.45;color:#565b62;white-space:normal;overflow-wrap:anywhere}
+</style>
 <script>
 const CALM_HERO='https://images.unsplash.com/photo-1777113310775-0cb3896f9ef7?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000';
 const IMG={
@@ -440,7 +447,8 @@ const defaultState={
   v13:{onboarded:false,onboardingStep:0},v14:{dateSection:'upcoming',usSection:'today'},
   v28:{anniversaries:[],calendarDates:[],calendarMonth:'',selectedDate:''},
   v31:{version:2,checkins:{},missions:{},notes:[],bucket:[],capsules:[],reservations:[],dailyActivity:{},wishlistTab:'places'},
-  v33:{version:1,auth:{status:'signed_out',provider:null,email:'',sessionValid:false,lastLoginAt:null,reason:null,resumeNav:null},setup:{profileDone:false,coupleDone:false,firstPlanDone:false},couple:{status:'none',flow:null,inviteCode:'',partnerName:'',linkedAt:null},network:{mode:'online'},loading:null,lastError:null,qa:{photoFail:false,longText:false,saveFail:false},runtime:{}}
+  v33:{version:1,auth:{status:'signed_out',provider:null,email:'',sessionValid:false,lastLoginAt:null,reason:null,resumeNav:null},setup:{profileDone:false,coupleDone:false,firstPlanDone:false},couple:{status:'none',flow:null,inviteCode:'',partnerName:'',linkedAt:null},network:{mode:'online'},loading:null,lastError:null,qa:{photoFail:false,longText:false,saveFail:false},runtime:{}},
+  v38:{version:1,places:{mode:'mock',status:'idle',source:'mock',lastArea:'',lastError:null,fetchedAt:null,count:0}}
 };
 
 var v32SaveFailedUntil=0;
@@ -449,7 +457,7 @@ ensureV13();
 let nav=[{route:'home',params:{}}];
 let timers=[];
 function load(){
-  const keys=['moment_v36','moment_v34','moment_v33','moment_v32','moment_v13','moment_v11'];
+  const keys=['moment_v38','moment_v36','moment_v34','moment_v33','moment_v32','moment_v13','moment_v11'];
   for(const key of keys){
     try{
       const raw=localStorage.getItem(key); if(!raw)continue;
@@ -457,7 +465,7 @@ function load(){
       return {...base,...old,
         profile:{...base.profile,...(old.profile||{}),car:{...base.profile.car,...(old.profile?.car||{})}},
         planner:{...base.planner,...(old.planner||{})},
-        v13:{...base.v13,...(old.v13||{})},v14:{...base.v14,...(old.v14||{})},v28:{...base.v28,...(old.v28||{})},v31:{...base.v31,...(old.v31||{})},v33:{...base.v33,...(old.v33||{}),auth:{...base.v33.auth,...(old.v33?.auth||{})},setup:{...base.v33.setup,...(old.v33?.setup||{})},couple:{...base.v33.couple,...(old.v33?.couple||{})},network:{...base.v33.network,...(old.v33?.network||{})},qa:{...base.v33.qa,...(old.v33?.qa||{})},runtime:{...base.v33.runtime,...(old.v33?.runtime||{})}}
+        v13:{...base.v13,...(old.v13||{})},v14:{...base.v14,...(old.v14||{})},v28:{...base.v28,...(old.v28||{})},v31:{...base.v31,...(old.v31||{})},v33:{...base.v33,...(old.v33||{}),auth:{...base.v33.auth,...(old.v33?.auth||{})},setup:{...base.v33.setup,...(old.v33?.setup||{})},couple:{...base.v33.couple,...(old.v33?.couple||{})},network:{...base.v33.network,...(old.v33?.network||{})},qa:{...base.v33.qa,...(old.v33?.qa||{})},runtime:{...base.v33.runtime,...(old.v33?.runtime||{})}},v38:{...base.v38,...(old.v38||{}),places:{...base.v38.places,...(old.v38?.places||{})}}
       }
     }catch(e){console.warn('상태 불러오기 실패',key,e)}
   }
@@ -794,6 +802,24 @@ function v23GenericPool(area){
     v23Place(area,'activity','둘이 가볍게 하는 실내 놀거리','체험',32000,70,true)
   ];
 }
+
+/* v38 — place provider bridge. API secrets stay behind the configured server proxy. */
+const V38_PLACE_CATEGORIES=['식사','분식','공원','산책','영화','코노','PC방','볼링','카페','술','시장','쇼핑','전시','드라이브','야경','체험'];
+const V38_PLACE_PROVIDER_CONFIG=(()=>{const raw=window.MOMENT_CONFIG?.placeProvider||{},requested=String(raw.mode||'mock').toLowerCase();return Object.freeze({mode:requested==='proxy'?'proxy':'mock',endpoint:String(raw.endpoint||'').trim(),timeoutMs:Math.max(1500,Math.min(12000,Number(raw.timeoutMs)||6500))})})();
+function v38PlaceState(){state.v38={...structuredClone(defaultState.v38),...(state.v38||{}),places:{...structuredClone(defaultState.v38.places),...(state.v38?.places||{})}};state.v38.places.mode=V38_PLACE_PROVIDER_CONFIG.mode;return state.v38.places}
+function v38PlaceCategory(raw){const value=String(raw||'').toLowerCase(),map=[['분식','분식'],['라멘','분식'],['restaurant','식사'],['food','식사'],['식당','식사'],['브런치','식사'],['카페','카페'],['cafe','카페'],['coffee','카페'],['영화','영화'],['cinema','영화'],['노래','코노'],['karaoke','코노'],['pc','PC방'],['볼링','볼링'],['bowling','볼링'],['공원','공원'],['park','공원'],['산책','산책'],['trail','산책'],['술','술'],['bar','술'],['pub','술'],['시장','시장'],['market','시장'],['쇼핑','쇼핑'],['shop','쇼핑'],['전시','전시'],['museum','전시'],['gallery','전시'],['드라이브','드라이브'],['야경','야경'],['체험','체험'],['activity','체험']];return map.find(([key])=>value.includes(key))?.[1]||'체험'}
+function v38PlaceDefaults(cat){return {price:{식사:36000,분식:24000,공원:0,산책:0,영화:30000,코노:14000,'PC방':18000,볼링:26000,카페:18000,술:42000,시장:16000,쇼핑:18000,전시:20000,드라이브:16000,야경:0,체험:32000}[cat]??24000,dur:{식사:65,분식:50,공원:45,산책:40,영화:130,코노:55,'PC방':80,볼링:75,카페:55,술:80,시장:60,쇼핑:55,전시:70,드라이브:75,야경:45,체험:70}[cat]??60}}
+function v38PlaceImage(value,cat){if(value){try{const url=new URL(String(value),location.href);if(['http:','https:'].includes(url.protocol))return url.href}catch(e){}}return V23_CAT_IMG[cat]||IMG.cafe1}
+function v38NormalizePlace(raw,area,index){const name=String(raw?.name||raw?.placeName||raw?.title||'').trim().slice(0,80);if(!name)return null;const cat=v38PlaceCategory(raw?.category||raw?.categoryName||raw?.type),defaults=v38PlaceDefaults(cat),price=Math.max(0,Math.min(500000,Number(raw?.price??raw?.estimatedPrice) || defaults.price)),dur=Math.max(20,Math.min(240,Number(raw?.durationMin??raw?.duration) || defaults.dur)),address=String(raw?.address||raw?.roadAddress||raw?.formattedAddress||`${area} · 상세 주소 확인 필요`).trim().slice(0,160),outdoor=['공원','산책','시장','드라이브','야경'].includes(cat),sourceId=String(raw?.id||raw?.placeId||index);return {id:`provider_${hash(`${area}|${sourceId}|${name}`).toString(36)}`,name,cat,price,dur,address,img:v38PlaceImage(raw?.imageUrl||raw?.image,cat),indoor:typeof raw?.indoor==='boolean'?raw.indoor:!outdoor,provider:'proxy'}}
+const PlaceProviders={
+  mock:{id:'mock',async searchPlaces({area}){return v23GenericPool(area)}},
+  proxy:{id:'proxy',async searchPlaces({area,categories=V38_PLACE_CATEGORIES,limit=36}={}){const cfg=V38_PLACE_PROVIDER_CONFIG;if(!cfg.endpoint)throw new Error('place_proxy_endpoint_missing');const url=new URL(cfg.endpoint,location.href);url.searchParams.set('area',area);url.searchParams.set('categories',categories.join(','));url.searchParams.set('limit',String(limit));const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),cfg.timeoutMs);try{const response=await fetch(url,{method:'GET',headers:{Accept:'application/json'},credentials:'same-origin',signal:controller.signal});if(!response.ok)throw new Error(`place_proxy_http_${response.status}`);const payload=await response.json(),rows=Array.isArray(payload)?payload:Array.isArray(payload?.places)?payload.places:Array.isArray(payload?.results)?payload.results:[];const places=rows.map((row,index)=>v38NormalizePlace(row,area,index)).filter(Boolean);if(places.length<2)throw new Error('place_proxy_empty');return places}finally{clearTimeout(timeout)}}}
+};
+async function searchPlaces(params={}){const area=v23AreaKey(params.area),mode=params.forceMock?'mock':V38_PLACE_PROVIDER_CONFIG.mode,provider=PlaceProviders[mode]||PlaceProviders.mock;return provider.searchPlaces({...params,area})}
+async function v38PreparePlacePool(area,{forceMock=false}={}){area=v23AreaKey(area);const model=ensureNationwideArea(area),meta=v38PlaceState(),mode=forceMock?'mock':V38_PLACE_PROVIDER_CONFIG.mode;meta.status='loading';meta.lastArea=area;meta.lastError=null;try{const places=await searchPlaces({area,categories:V38_PLACE_CATEGORIES,limit:36,forceMock});if(mode==='proxy'){model.providerPool=places;meta.source='proxy'}else{delete model.providerPool;meta.source='mock'}meta.status='ready';meta.count=places.length;meta.fetchedAt=Date.now();return places}catch(error){meta.lastError=String(error?.name==='AbortError'?'place_proxy_timeout':error?.message||'place_provider_error');if(Array.isArray(model.providerPool)&&model.providerPool.length>=2){meta.status='stale';meta.source='proxy-cache';meta.count=model.providerPool.length;return model.providerPool}delete model.providerPool;const fallback=await PlaceProviders.mock.searchPlaces({area});meta.status='fallback';meta.source='mock';meta.count=fallback.length;meta.fetchedAt=Date.now();return fallback}}
+async function v38GeneratePlans(options={}){await v38PreparePlacePool(state.planner.area,options);generatePlans();return state.plans}
+function v38ProviderNote(){const meta=v38PlaceState();if(meta.source==='proxy')return '실제 장소 검색 결과를 바탕으로 구성했어요.';if(meta.source==='proxy-cache')return '장소 검색 연결이 지연돼 최근 검색 결과로 구성했어요.';if(meta.status==='fallback')return '장소 검색 연결이 어려워 예시 장소로 흐름을 구성했어요.';return '현재 프로토타입은 예시 장소로 코스 흐름을 검수해요.'}
+function v38ProviderQACard(){const meta=v38PlaceState(),configured=V38_PLACE_PROVIDER_CONFIG.mode==='proxy'&&!!V38_PLACE_PROVIDER_CONFIG.endpoint,label=meta.source==='proxy'?'서버 프록시':meta.source==='proxy-cache'?'최근 서버 결과':'예시 데이터';return `<div class="v38-provider-card"><b>장소 provider · ${label}</b><p>${configured?'브라우저에는 API 키를 두지 않고 설정된 서버 프록시만 호출해요.':'현재는 예시 provider를 사용해요. 서버에서 실제 장소 API를 연결하면 화면 로직 변경 없이 교체할 수 있어요.'}${meta.lastArea?`<br>최근 지역 ${esc(meta.lastArea)} · ${meta.count||0}개`:''}${meta.lastError?`<br>최근 복구 사유 ${esc(meta.lastError)}`:''}</p><code>GET ${esc(V38_PLACE_PROVIDER_CONFIG.endpoint||'/api/places/search')}?area=…&categories=…&limit=… → { places: […] }</code></div>`}
 function ensureNationwideArea(area){
   area=v23AreaKey(area);
   if(!AREA[area]){
@@ -803,7 +829,8 @@ function ensureNationwideArea(area){
 }
 function v23Pool(area){
   const base=ensureNationwideArea(area);const generic=v23GenericPool(area);const seen=new Set();
-  return [...(base.pool||[]),...generic].filter(x=>{const k=x.id||x.name;if(seen.has(k))return false;seen.add(k);return true});
+  const primary=Array.isArray(base.providerPool)&&base.providerPool.length?base.providerPool:(base.pool||[]);
+  return [...primary,...generic].filter(x=>{const k=x.id||x.name;if(seen.has(k))return false;seen.add(k);return true});
 }
 function v23RememberArea(area){area=v23CleanArea(area);if(!area)return;state.regionHistory=[area,...state.regionHistory.filter(x=>x!==area)].slice(0,6)}
 function v23HasRail(area){return /(서울|부산|대구|인천|광주|대전|수원|성남|용인|고양|부천|안양|의정부|김포|남양주|하남|시흥|화성|천안|아산)/.test(area)}
@@ -891,7 +918,7 @@ function generateV22Course(){if(v36ActiveLive()){document.querySelector('.sheet-
 routes.planner=()=>{const p=state.planner;return `${pagebar('데이트 만들기')}<div class="planner-intro"><h1>언제, 어디서만<br>확인해주세요.</h1><div class="section-sub">전국 어느 동네든 검색하고, 데이트 종류는 자동으로 다양하게 섞어요.</div></div><div class="planner-block"><div class="planner-row"><label>날짜와 시간</label><div class="pair"><input class="input" id="planDate" type="date" value="${p.date||today()}"><input class="input" id="planTime" type="time" value="${p.time}"></div></div><div class="planner-row"><label>만날 지역</label><div class="v34-location-row"><input class="v23-region-input" id="planArea" value="${esc(p.area)}" placeholder="시·군·구·동·역 이름 검색"><button class="v34-location-btn" onclick="v34UseCurrentArea('planArea')">현재 위치 사용</button></div><div class="v23-region-help">예: 청주 복대동 · 제주 애월 · 전주 효자동 · 양평 · 부산 서면</div></div><div class="auto-summary"><b>자동으로 이렇게 적용할게요</b><p>2인 ${money(p.budget)} · ${p.transport==='auto'?'이동수단은 구간마다 자동 선택':transportLabel(p.transport)} · 귀가 ${p.returnTime} · ${V23_STYLE_LABELS[p.dateStyle||'auto']}</p></div><button class="advanced-toggle" onclick="document.getElementById('advanced').classList.toggle('hidden')">오늘만 조건 바꾸기 ＋</button><div id="advanced" class="hidden"><div class="planner-row"><label>데이트 느낌</label><div class="v23-style-grid">${Object.entries(V23_STYLE_LABELS).map(([v,l])=>`<button class="v23-style ${(p.dateStyle||'auto')===v?'on':''}" onclick="setV23Style('${v}',this)">${l}</button>`).join('')}</div></div><div class="planner-row"><label>예산</label><div class="chips">${[50000,70000,100000,150000,200000].map(v=>`<button class="chip ${p.budget===v?'on':''}" onclick="setPlanOpt('budget',${v},this)">${money(v)}</button>`).join('')}</div></div><div class="planner-row"><label>이동</label><div class="chips">${[['auto','알아서'],['public','대중교통'],['taxi','택시'],['car','자차']].map(([v,l])=>`<button class="chip ${p.transport===v?'on':''}" onclick="setPlanOpt('transport','${v}',this)">${l}</button>`).join('')}</div></div><div class="planner-row"><label>오늘 컨디션</label><div class="chips">${[['easy','편하게'],['normal','보통'],['active','제대로']].map(([v,l])=>`<button class="chip ${p.energy===v?'on':''}" onclick="setPlanOpt('energy','${v}',this)">${l}</button>`).join('')}</div></div><div class="planner-row"><label>귀가 마지노선</label><input class="input" id="returnTime" type="time" value="${p.returnTime}"><div class="field-note">시작시간보다 이른 시각이면 다음 날 귀가로 계산해요.</div></div></div></div><div style="height:96px"></div><div class="cta-fixed"><button class="primary" onclick="generateFromPlanner()">바로 코스 보기</button></div>`}
 function generateFromPlanner(){if(v36ActiveLive()){v36ShowLiveConflict('planned');return}const d=document.getElementById('planDate')?.value,t=document.getElementById('planTime')?.value,a=v23CleanArea(document.getElementById('planArea')?.value),ret=document.getElementById('returnTime');if(!d||!t||a.length<2){toast('날짜, 시간, 지역을 확인해주세요.');return}const rv=ret?.value||state.planner.returnTime;if(v33NeedsNextDayConfirm(t,rv)&&!state.v33.runtime.nextDayConfirmed){v33ConfirmNextDayReturn(()=>generateFromPlanner());return}state.v33.runtime.nextDayConfirmed=false;state.planner.date=d;state.planner.time=t;state.planner.area=a;if(ret)state.planner.returnTime=rv;ensureNationwideArea(a);v23RememberArea(a);if(!save())return;v33StartPlanLoading('planned')}
 routes.onboarding=()=>{const step=state.v13.onboardingStep||0;if(step===0)return `<div class="onboard"><div class="onboard-mark">모먼트</div><div class="onboard-photo"><img src="${IMG.hero}"></div><div class="onboard-copy"><h1>어디서 만나든<br>그 동네에서 놀 수 있게.</h1><p>유명 데이트 상권만 고르는 앱이 아니라 전국 어느 지역이든 밥, 산책, 영화, 코노, PC방, 술, 볼링 같은 실제 하루를 코스로 만들어요.</p></div><div class="onboard-actions"><button class="main" onclick="state.v13.onboardingStep=1;if(!save())return;render()">첫 코스 만들어보기</button><button class="skip" onclick="completeOnboarding(false)">둘러보고 시작하기</button></div></div>`;return `<div class="onboard"><div class="onboard-mark">첫 데이트 설정</div><div class="onboard-copy" style="margin-top:52px"><h1>오늘 언제,<br>어디서 만나요?</h1><p>동네 이름이나 역 이름을 자유롭게 입력하세요.</p></div><div class="planner-row" style="margin-top:28px"><label>지역</label><input id="obArea" class="v23-region-input" placeholder="예: 전주 효자동" value="${esc(state.planner.area)}"></div><div class="planner-row"><label>시간</label><input id="obTime" class="input" type="time" value="18:30"></div><div class="onboard-actions"><button class="main" onclick="completeOnboarding(true)">첫 코스 바로 보기</button></div></div>`}
-function completeOnboarding(makePlan){state.v13.onboarded=true;state.v13.onboardingStep=0;if(makePlan){const area=v23CleanArea(document.getElementById('obArea')?.value);if(area.length<2){toast('만날 지역을 입력해주세요.');return}state.planner.area=area;state.planner.time=document.getElementById('obTime')?.value||'18:30';state.planner.date=today();state.planner.duration=5;ensureNationwideArea(area);v23RememberArea(area);generatePlans();if(!save())return;nav=[{route:'results',params:{}}];render()}else{if(!save())return;switchTab('home')}}
+async function completeOnboarding(makePlan){state.v13.onboarded=true;state.v13.onboardingStep=0;if(makePlan){const area=v23CleanArea(document.getElementById('obArea')?.value);if(area.length<2){toast('만날 지역을 입력해주세요.');return}state.planner.area=area;state.planner.time=document.getElementById('obTime')?.value||'18:30';state.planner.date=today();state.planner.duration=5;ensureNationwideArea(area);v23RememberArea(area);await v38GeneratePlans();if(!save())return;nav=[{route:'results',params:{}}];render()}else{if(!save())return;switchTab('home')}}
 
 
 /* ==================== v28 zero-confusion UX ==================== */
@@ -1103,7 +1130,7 @@ function openV29ConfirmedEdit(eventId){const e=v29CalendarEventById(eventId);if(
 /* v32 clean removed superseded fn:saveV29ConfirmedEdit */
 
 function openV29CourseChooser(eventId){const e=v29CalendarEventById(eventId);if(!e)return;const plans=v29PlanPool().filter(p=>e.type!=='plan'||!state.confirmed.some(c=>c!==e.raw&&c.planId===p.id)).slice(0,8);document.querySelector('.sheet-wrap')?.remove();document.getElementById('app').insertAdjacentHTML('beforeend',`<div class="sheet-wrap" onclick="if(event.target===this)this.remove()"><div class="sheet v22-sheet" style="max-height:82vh;overflow:auto"><div class="grab"></div><h3>${e.planId?'코스 바꾸기':'이날 코스 고르기'}</h3><p class="intro">${v28FmtDate(e.date)} ${esc(e.time)}에 즐길 코스를 골라요. 이미 고른 코스도 언제든 바꿀 수 있어요.</p><button class="v22-sheet-main" style="width:100%;margin-top:8px" onclick="v29GenerateForEvent('${eventId}')">이 일정에 맞는 새 코스 3개 만들기</button><div class="v29-course-choice-list">${plans.length?plans.map(p=>`<button class="v29-course-choice" onclick="v29AssignCourse('${eventId}','${p.id}')"><img src="${p.cover}"><div><b>${esc(p.title)}</b><span>${esc(v29CourseMini(p))}</span></div></button>`).join(''):`<div class="v14-empty">아직 후보 코스가 없어요. 위 버튼으로 바로 만들어보세요.</div>`}</div></div></div>`)}
-function v29GenerateForEvent(eventId){if(v36ActiveLive()){v36ShowLiveConflict('planned');return}const e=v29CalendarEventById(eventId);if(!e)return;state.planner.date=e.date;state.planner.time=e.time;state.planner.area=v23AreaKey(e.area||state.planner.area);ensureNationwideArea(state.planner.area);generatePlans();if(!save())return;openV29CourseChooser(eventId);toast('이 일정에 맞는 코스를 새로 만들었어요')}
+async function v29GenerateForEvent(eventId){if(v36ActiveLive()){v36ShowLiveConflict('planned');return}const e=v29CalendarEventById(eventId);if(!e)return;if(v33IsOffline()){state.v33.lastError={type:'network',source:'event',eventId};document.querySelector('.sheet-wrap')?.remove();navigate('errorState',{type:'network'});return}state.planner.date=e.date;state.planner.time=e.time;state.planner.area=v23AreaKey(e.area||state.planner.area);ensureNationwideArea(state.planner.area);document.querySelector('.sheet-wrap')?.remove();state.v33.loading={source:'event',stage:0,startedAt:Date.now()};nav.push({route:'planLoading',params:{source:'event'}});render();await v38GeneratePlans();if(!save())return;state.v33.loading=null;nav.pop();render();openV29CourseChooser(eventId);toast('이 일정에 맞는 코스를 새로 만들었어요')}
 /* v32 clean removed superseded fn:v29AssignCourse */
 
 /* v32 clean removed superseded fn:v28SelectedEventsHTML */
@@ -1155,7 +1182,7 @@ afterRender=function(route,params){v27AfterRender(route,params);if(route==='live
 state.v30=state.v30||{version:1};
 function v23CleanArea(v){return String(v||'').replace(/[<>\"']/g,'').replace(/\s+/g,' ').trim().slice(0,40)}
 const v30LegacyFindPlan=findPlan;
-function save(){try{if(state.v33?.qa?.saveFail)throw new DOMException('QA simulated quota','QuotaExceededError');localStorage.setItem('moment_v36',JSON.stringify(state));if(state.v33?.runtime)state.v33.runtime.lastSaveError=null;return true}catch(e){console.error('저장 실패',e);v32SaveFailedUntil=Date.now()+3200;if(state.v33?.runtime)state.v33.runtime.lastSaveError=String(e?.name||'save_error');v33NotifySaveFailure();return false}}
+function save(){try{if(state.v33?.qa?.saveFail)throw new DOMException('QA simulated quota','QuotaExceededError');localStorage.setItem('moment_v38',JSON.stringify(state));if(state.v33?.runtime)state.v33.runtime.lastSaveError=null;return true}catch(e){console.error('저장 실패',e);v32SaveFailedUntil=Date.now()+3200;if(state.v33?.runtime)state.v33.runtime.lastSaveError=String(e?.name||'save_error');v33NotifySaveFailure();return false}}
 
 function v30ClonePlan(source,date,time,prefix='sched'){
   if(!source)return null;
@@ -1222,7 +1249,7 @@ function generatePlans(){
   state.selectedPlanId=state.plans[0]?.id||null;v23RememberArea(p.area);save();
 }
 
-routes.results=()=>{const best=state.plans[0],alts=state.plans.slice(1);if(!best)return `${pagebar('추천 코스')}<div class="section">추천을 다시 만들어주세요.</div>`;return `${pagebar('오늘의 코스',`<button class="iconbtn" onclick="regenerate()">↻</button>`)}<div class="v14-results-intro"><div class="eyebrow">가장 잘 맞는 한 코스</div><h1>하나만 먼저<br>추천할게요.</h1><div class="section-sub">예산·시간·귀가 마지노선을 넘지 않는 코스만 보여줘요.</div></div><div class="v14-best"><div class="v14-best-photo"><img src="${best.cover}"></div><h2>${esc(best.title)}</h2><p>${esc(best.reason)}</p><div class="v14-meta-line"><span>${best.totalHours.toFixed(1)}시간</span><span>2인 ${money(best.totalCost)}</span><span>이동 ${best.travelMin}분</span></div>${best.constraintLimited?`<div class="v30-limit-note">현재 조건이 촉박해서 무리하게 장소를 늘리지 않고 가능한 범위만 추천했어요.</div>`:''}<div class="v14-best-actions"><button class="view" onclick="openPlan('${best.id}')">코스 보기</button><button class="confirm" onclick="confirmAndOpen('${best.id}')">이대로 결정할게요</button></div></div><div class="v14-alts"><div class="v14-section-head" style="margin-bottom:0"><div><div class="v14-section-title" style="font-size:19px">다른 선택</div></div><button class="v14-link" onclick="regenerate()">다시 추천</button></div>${alts.map(p=>`<button class="v14-alt" onclick="openPlan('${p.id}')"><img src="${p.cover}"><div class="copy"><small>${esc(p.altLabel||'다른 분위기로')}</small><b>${esc(p.title)}</b><p>${money(p.totalCost)} · ${p.totalHours.toFixed(1)}시간 · 이동 ${p.travelMin}분</p></div><div>›</div></button>`).join('')}</div>`};
+routes.results=()=>{const best=state.plans[0],alts=state.plans.slice(1);if(!best)return `${pagebar('추천 코스')}<div class="section">추천을 다시 만들어주세요.</div>`;return `${pagebar('오늘의 코스',`<button class="iconbtn" onclick="regenerate()">↻</button>`)}<div class="v14-results-intro"><div class="eyebrow">가장 잘 맞는 한 코스</div><h1>하나만 먼저<br>추천할게요.</h1><div class="section-sub">예산·시간·귀가 마지노선을 넘지 않는 코스만 보여줘요.</div></div><div class="v14-best"><div class="v14-best-photo"><img src="${best.cover}"></div><h2>${esc(best.title)}</h2><p>${esc(best.reason)}</p><div class="v14-meta-line"><span>${best.totalHours.toFixed(1)}시간</span><span>2인 ${money(best.totalCost)}</span><span>이동 ${best.travelMin}분</span></div><div class="v38-data-note">${esc(v38ProviderNote())}</div>${best.constraintLimited?`<div class="v30-limit-note">현재 조건이 촉박해서 무리하게 장소를 늘리지 않고 가능한 범위만 추천했어요.</div>`:''}<div class="v14-best-actions"><button class="view" onclick="openPlan('${best.id}')">코스 보기</button><button class="confirm" onclick="confirmAndOpen('${best.id}')">이대로 결정할게요</button></div></div><div class="v14-alts"><div class="v14-section-head" style="margin-bottom:0"><div><div class="v14-section-title" style="font-size:19px">다른 선택</div></div><button class="v14-link" onclick="regenerate()">다시 추천</button></div>${alts.map(p=>`<button class="v14-alt" onclick="openPlan('${p.id}')"><img src="${p.cover}"><div class="copy"><small>${esc(p.altLabel||'다른 분위기로')}</small><b>${esc(p.title)}</b><p>${money(p.totalCost)} · ${p.totalHours.toFixed(1)}시간 · 이동 ${p.travelMin}분</p></div><div>›</div></button>`).join('')}</div>`};
 
 function confirmPlan(id){const src=findPlan(id);if(!src)return null;const snap=v30ClonePlan(src,src.config?.date||today(),src.config?.time||state.planner.time,'confirmed');state.confirmed.push({planId:snap.id,sourcePlanId:src.id,date:snap.config.date,time:snap.config.time,plan:snap,status:'confirmed'});state.savedCandidates=state.savedCandidates.filter(x=>x.planId!==id);if(!save())return;toast('데이트를 확정했어요');return snap.id}
 function confirmAndOpen(id){const sid=confirmPlan(id);if(sid)v36ShowConfirmedSheet(sid)}
@@ -1294,7 +1321,7 @@ function liveAt(p,L){if(!L.placeArrivedAt){L.placeArrivedAt=Date.now();save()}co
 
 /* one instant-date flow everywhere */
 function generateV23Instant(){document.querySelector('.sheet-wrap')?.remove();setTimeout(()=>openV29InstantComposer(),0)}
-function quickGenerate(mode){if(v36ActiveLive()){v36ShowLiveConflict(mode==='instant'?'instant':'planned');return}if(mode==='instant'){openV29InstantComposer();return}state.planner.date=today();if(mode==='now3'){state.planner.time=nowHM();state.planner.duration=3;state.planner.energy='easy'}else if(mode==='tonight'){state.planner.time='18:30';state.planner.duration=4;state.planner.energy='easy'}else{state.planner.duration=5;state.planner.energy='normal';state.planner.transport='auto';state.planner.budget=state.profile.budget||state.planner.budget;state.planner.returnTime=state.profile.returnTime||state.planner.returnTime}save();generatePlans();navigate('results')}
+function quickGenerate(mode){if(v36ActiveLive()){v36ShowLiveConflict(mode==='instant'?'instant':'planned');return}if(mode==='instant'){openV29InstantComposer();return}state.planner.date=today();if(mode==='now3'){state.planner.time=nowHM();state.planner.duration=3;state.planner.energy='easy'}else if(mode==='tonight'){state.planner.time='18:30';state.planner.duration=4;state.planner.energy='easy'}else{state.planner.duration=5;state.planner.energy='normal';state.planner.transport='auto';state.planner.budget=state.profile.budget||state.planner.budget;state.planner.returnTime=state.profile.returnTime||state.planner.returnTime}if(!save())return;v33StartPlanLoading(mode)}
 /* v32 clean removed superseded route:home */
 
 
@@ -1447,7 +1474,7 @@ function v31TodaySummaryHTML(){const c=v31TodayCheckin(),m=v31TodayMission(),not
 routes.us=()=>{const d=daysTogether(),sec=state.v14.usSection;let body='';if(sec==='today'){body=v31TodaySummaryHTML()}else if(sec==='memories'){body=`<button class="v31-hub-row" onclick="navigate('memoryFlash')"><div class="copy"><b>추억 하나 꺼내보기</b><span>쌓인 기록 중 오늘 하나를 다시 보여줘요.</span></div><div class="v31-hub-progress">›</div></button><button class="v31-hub-row" onclick="navigate('capsules')"><div class="copy"><b>우리 타임캡슐</b><span>미래의 날짜에 열어볼 말을 남겨요.</span></div><div class="v31-hub-progress">${state.v31.capsules.length}</div></button><div class="v31-section-label">최근 데이트</div>${state.records.slice(0,4).map(r=>`<button class="v14-list-row" onclick="navigate('record',{id:'${r.id}'})"><b>${esc(r.title)}</b><span>${esc(r.date)}${r.photos?` · 사진 ${r.photos}장`:''} · ${esc(v30RecordCost(r))}</span></button>`).join('')||'<div class="v14-empty">기록이 아직 없어요.</div>'}<button class="v14-link" style="margin-top:14px" onclick="navigate('records')">전체 기록 보기</button>`}else if(sec==='plans'){body=`<div class="v14-us-menu"><button onclick="navigate('anniversaries')"><div><b>우리 기념일</b><span>${v14NextMilestone()}</span></div><div>›</div></button><button onclick="navigate('wishlist')"><div><b>같이 하고 싶은 것</b><span>장소 ${state.wishlist.length}곳 · 버킷 ${state.v31.bucket.filter(x=>!x.done).length}개</span></div><div>›</div></button><button onclick="switchTab('dates')"><div><b>데이트 캘린더</b><span>약속 날짜와 코스를 함께 관리해요.</span></div><div>›</div></button></div>`}else{body=`<div class="v14-us-menu"><button onclick="navigate('taste')"><div><b>선호하는 분위기</b><span>10초 선택에서 계속 학습해요.</span></div><div>›</div></button><button onclick="navigate('balance')"><div><b>둘의 선택 패턴</b><span>오늘의 밸런스 결과를 모아봐요.</span></div><div>›</div></button><button onclick="navigate('question')"><div><b>우리의 답변</b><span>질문에 남긴 대화를 다시 봐요.</span></div><div>›</div></button><button onclick="navigate('weekly')"><div><b>이번 주 우리</b><span>작은 기록들이 얼마나 쌓였는지 봐요.</span></div><div>›</div></button></div>`}return `${topHome().replace('모먼트','우리')}<div class="v14-us-hero"><div class="eyebrow">우리의 시간</div><h1>${relationship()}</h1><p>D+${d} · 기록 ${state.records.length}개 · 저장한 곳 ${state.wishlist.length}곳</p></div><div class="v14-tabs"><button class="v14-tab ${sec==='today'?'on':''}" onclick="setV14UsSection('today')">오늘</button><button class="v14-tab ${sec==='memories'?'on':''}" onclick="setV14UsSection('memories')">추억</button><button class="v14-tab ${sec==='plans'?'on':''}" onclick="setV14UsSection('plans')">계획</button><button class="v14-tab ${sec==='taste'?'on':''}" onclick="setV14UsSection('taste')">취향</button></div><div class="v14-panel">${body}</div>`}
 
 /* ----- Friendly safety checks: no invisible destructive actions ----- */
-function v31ResetPrototypeData(){document.getElementById('app').insertAdjacentHTML('beforeend',`<div class="sheet-wrap" onclick="if(event.target===this)this.remove()"><div class="sheet"><div class="grab"></div><h3>저장된 테스트 데이터를 초기화할까요?</h3><p>데이트 기록, 일정, 둘만의 오늘 데이터가 모두 지워져요. 개발/테스트용 기능이에요.</p><button class="sheet-option" onclick="localStorage.removeItem('moment_v36');localStorage.removeItem('moment_v34');localStorage.removeItem('moment_v33');localStorage.removeItem('moment_v32');localStorage.removeItem('moment_v13');location.reload()"><div><b style="color:#b33847">전체 초기화</b></div><div>›</div></button><button class="sheet-option" onclick="document.querySelector('.sheet-wrap').remove()"><div><b>취소</b></div><div>›</div></button></div></div>`)}
+function v31ResetPrototypeData(){document.getElementById('app').insertAdjacentHTML('beforeend',`<div class="sheet-wrap" onclick="if(event.target===this)this.remove()"><div class="sheet"><div class="grab"></div><h3>저장된 테스트 데이터를 초기화할까요?</h3><p>데이트 기록, 일정, 둘만의 오늘 데이터가 모두 지워져요. 개발/테스트용 기능이에요.</p><button class="sheet-option" onclick="localStorage.removeItem('moment_v38');localStorage.removeItem('moment_v36');localStorage.removeItem('moment_v34');localStorage.removeItem('moment_v33');localStorage.removeItem('moment_v32');localStorage.removeItem('moment_v13');location.reload()"><div><b style="color:#b33847">전체 초기화</b></div><div>›</div></button><button class="sheet-option" onclick="document.querySelector('.sheet-wrap').remove()"><div><b>취소</b></div><div>›</div></button></div></div>`)}
 
 /* record route old seeded data can have photos count without photo payload; never claim actual photos exist */
 state.records.forEach(r=>{if(!Array.isArray(r.photoMemories))r.photoMemories=[];if(r.photoMemories.length===0&&r.photos&&String(r.id).startsWith('r'))r.photos=0});
@@ -1487,7 +1514,7 @@ function v33ApplyRouteGuard(){
   if(!state.v33.setup.coupleDone){if(route!=='setupCouple')nav=[{route:'setupCouple',params:{}}];return}
   if(!state.v33.setup.firstPlanDone){if(!['setupFirstDate','planLoading','errorState'].includes(route))nav=[{route:'setupFirstDate',params:{}}];return}
 }
-function v33Boot(){v33EnsureState();if(state.planner.area)ensureNationwideArea(state.planner.area);if(!v33IsSignedIn())nav=[{route:'login',params:{reason:state.v33.auth.reason||null}}];else if(!state.v33.setup.profileDone)nav=[{route:'setupProfile',params:{}}];else if(!state.v33.setup.coupleDone)nav=[{route:'setupCouple',params:{}}];else if(!state.v33.setup.firstPlanDone)nav=[{route:'setupFirstDate',params:{}}];else nav=[{route:'home',params:{}}]}
+function v33Boot(){v33EnsureState();v38PlaceState();if(state.planner.area)ensureNationwideArea(state.planner.area);if(!v33IsSignedIn())nav=[{route:'login',params:{reason:state.v33.auth.reason||null}}];else if(!state.v33.setup.profileDone)nav=[{route:'setupProfile',params:{}}];else if(!state.v33.setup.coupleDone)nav=[{route:'setupCouple',params:{}}];else if(!state.v33.setup.firstPlanDone)nav=[{route:'setupFirstDate',params:{}}];else nav=[{route:'home',params:{}}]}
 function v33NotifySaveFailure(){const app=document.getElementById('app');if(!app)return;app.querySelector('.v33-save-error-sheet')?.remove();app.insertAdjacentHTML('beforeend',`<div class="v33-save-error-sheet"><div class="v33-save-error-card"><h3>저장하지 못했어요</h3><p>사진이나 오래된 기록 때문에 기기 저장 공간이 부족할 수 있어요. 지금 화면은 닫지 않았고 입력한 내용도 가능한 한 그대로 두었어요.</p><button onclick="this.closest('.v33-save-error-sheet').remove()">확인</button></div></div>`)}
 function v33RequireOnline(msg='인터넷 연결이 필요해요.'){if(!v33IsOffline())return true;toast(msg);return false}
 function v33ErrorPanel(title,desc,action,label){return `${pagebar('문제가 생겼어요')}<div class="v33-error"><div class="v33-error-icon">!</div><h1>${esc(title)}</h1><p>${esc(desc)}</p><div class="v33-error-actions"><button class="main" onclick="${action}">${esc(label)}</button></div></div>`}
@@ -1508,10 +1535,10 @@ function v33SkipCouple(){state.v33.couple.status='skipped';state.v33.couple.flow
 function v33FinishFirstDateSetup(){const area=v23CleanArea(document.getElementById('v33FirstArea')?.value),date=document.getElementById('v33FirstDate')?.value,time=document.getElementById('v33FirstTime')?.value;if(area.length<2||!date||!time){toast('지역, 날짜, 시간을 확인해주세요.');return}state.planner.area=area;state.planner.date=date;state.planner.time=time;state.planner.duration=5;state.profile.region=state.profile.region||area;ensureNationwideArea(area);v23RememberArea(area);state.v33.setup.firstPlanDone=true;state.v13.onboarded=true;if(!save())return;v33StartPlanLoading('first')}
 function v33NeedsNextDayConfirm(start,ret){return !!start&&!!ret&&hmToMin(ret)<hmToMin(start)}
 function v33ConfirmNextDayReturn(callback){document.getElementById('app').insertAdjacentHTML('beforeend',`<div class="sheet-wrap"><div class="sheet"><div class="grab"></div><h3>다음 날 귀가가 맞나요?</h3><p>귀가 시간이 시작 시간보다 빨라서 다음 날 귀가로 계산돼요. 잘못 선택했다면 시간을 다시 확인해주세요.</p><button class="primary" id="v33NextDayOk">다음 날 귀가가 맞아요</button><button class="secondary" style="width:100%;margin-top:8px" onclick="this.closest('.sheet-wrap').remove()">시간 다시 보기</button></div></div>`);document.getElementById('v33NextDayOk').onclick=()=>{state.v33.runtime.nextDayConfirmed=true;document.querySelector('.sheet-wrap')?.remove();callback()}}
-function v33StartPlanLoading(source){if(v33IsOffline()){state.v33.lastError={type:'network',source};nav.push({route:'errorState',params:{type:'network'}});render();return}state.v33.loading={source,stage:0,startedAt:Date.now()};nav.push({route:'planLoading',params:{source}});render();const delays=state.v33.network.mode==='slow'?[650,1350,2200]:[350,720,1180];delays.slice(0,2).forEach((d,i)=>{const id=setTimeout(()=>v33UpdatePlanLoading(i+1),d);timers.push(id)});const id=setTimeout(()=>{generatePlans();if(!save())return;state.v33.loading=null;replace('results')},delays[2]);timers.push(id)}
+function v33StartPlanLoading(source){if(v33IsOffline()){state.v33.lastError={type:'network',source};nav.push({route:'errorState',params:{type:'network'}});render();return}state.v33.loading={source,stage:0,startedAt:Date.now()};nav.push({route:'planLoading',params:{source}});render();const delays=state.v33.network.mode==='slow'?[650,1350,2200]:[350,720,1180];delays.slice(0,2).forEach((d,i)=>{const id=setTimeout(()=>v33UpdatePlanLoading(i+1),d);timers.push(id)});const id=setTimeout(async()=>{await v38GeneratePlans();if(!save())return;state.v33.loading=null;replace('results');if(state.v38?.places?.status==='fallback')toast('장소 검색이 어려워 예시 데이터로 계속했어요')},delays[2]);timers.push(id)}
 function v33UpdatePlanLoading(stage){if(current().route!=='planLoading')return;state.v33.loading.stage=stage;document.querySelectorAll('.v33-load-step').forEach((el,i)=>{el.classList.toggle('done',i<stage);el.classList.toggle('on',i===stage)});const msg=document.getElementById('v33LoadMsg');if(msg)msg.textContent=['주변에서 갈 만한 곳을 고르고 있어요.','동선과 이동시간을 비교하고 있어요.','예산과 귀가시간에 맞춰 마지막으로 정리하고 있어요.'][stage]||msg.textContent}
-function v33UseCachedPlan(){generatePlans();if(!save())return;state.v33.lastError=null;replace('results');toast('예시 데이터로 코스를 만들었어요')}
-function v33RetryLastError(){if(v33IsOffline()){toast('인터넷 연결을 확인해주세요.');return}const src=state.v33.lastError?.source||'planned';state.v33.lastError=null;goBack();setTimeout(()=>v33StartPlanLoading(src),50)}
+async function v33UseCachedPlan(){const last={...(state.v33.lastError||{})};await v38GeneratePlans({forceMock:true});if(!save())return;state.v33.lastError=null;if(last.source==='event'&&last.eventId){goBack();openV29CourseChooser(last.eventId)}else replace('results');toast('예시 데이터로 코스를 만들었어요')}
+function v33RetryLastError(){if(v33IsOffline()){toast('인터넷 연결을 확인해주세요.');return}const last={...(state.v33.lastError||{})},src=last.source||'planned';state.v33.lastError=null;goBack();if(src==='event'&&last.eventId)setTimeout(()=>v29GenerateForEvent(last.eventId),50);else setTimeout(()=>v33StartPlanLoading(src),50)}
 function v33SetNetwork(mode){state.v33.network.mode=mode;if(!save())return;render();toast(mode==='offline'?'오프라인 상태를 테스트해요':mode==='slow'?'느린 네트워크를 테스트해요':'네트워크를 정상으로 돌렸어요')}
 function v33OpenCoupleSettings(){navigate('coupleSettings')}
 function v33DisconnectCouple(){state.v33.couple={...structuredClone(defaultState.v33.couple),status:'skipped'};state.profile.partner='연인';if(!save())return;render();toast('커플 연결을 해제했어요')}
@@ -1520,7 +1547,7 @@ function v33AfterRender(){v33InstallViewport();v33BindKeyboardAssist()}
 let v33ViewportInstalled=false;function v33InstallViewport(){if(v33ViewportInstalled)return;v33ViewportInstalled=true;const apply=()=>{const h=window.visualViewport?.height||window.innerHeight;document.documentElement.style.setProperty('--v33-app-height',`${h}px`);document.body.classList.toggle('v33-keyboard-open',(window.innerHeight-h)>120)};window.visualViewport?.addEventListener('resize',apply);window.addEventListener('resize',apply);apply()}
 let v33KeyboardBound=false;function v33BindKeyboardAssist(){if(v33KeyboardBound)return;v33KeyboardBound=true;document.getElementById('app').addEventListener('focusin',e=>{if(!e.target.matches('input,textarea,select'))return;setTimeout(()=>e.target.scrollIntoView({block:'center',behavior:'smooth'}),240)})}
 function v33OpenQALab(){navigate('qaLab')}
-function v33SetSaveFail(v){state.v33.qa.saveFail=v;if(!v){try{localStorage.setItem('moment_v36',JSON.stringify(state))}catch(e){}}render()}
+function v33SetSaveFail(v){state.v33.qa.saveFail=v;if(!v){try{localStorage.setItem('moment_v38',JSON.stringify(state))}catch(e){}}render()}
 
 routes.login=({reason}={})=>{const expired=(reason||state.v33.auth.reason)==='expired',offline=v33IsOffline();return `<div class="v33-auth"><div class="v33-auth-brand">모먼트</div><div class="v33-auth-main"><h1>${expired?'다시 연결하면\n바로 이어갈게요.':'오늘 데이트,\n그냥 따라오세요.'}</h1><p>${expired?'로그인 세션만 만료됐어요. 작성하던 일정과 기록은 이 기기에 그대로 보관돼 있어요.':'언제·어디서 만나는지만 정하면 코스, 이동, 시간 관리, 기록까지 한 흐름으로 이어져요.'}</p>${expired?`<div class="v33-auth-alert">로그인이 만료됐어요. 다시 로그인하면 보던 화면으로 돌아가요.</div>`:''}${offline?`<div class="v33-auth-alert offline">인터넷 연결이 없어서 로그인할 수 없어요. Wi-Fi나 모바일 데이터를 확인한 뒤 다시 시도해주세요.</div>`:''}<div class="v33-auth-proof"><div><i>1</i><span>전국 어느 동네든 실제 하루처럼 코스를 구성해요.</span></div><div><i>2</i><span>데이트 중에는 이동과 남은 체류시간까지 이어서 봐요.</span></div><div><i>3</i><span>끝나면 둘의 일정·사진·기록으로 자연스럽게 남아요.</span></div></div></div><div class="v33-auth-actions"><button class="v33-auth-btn kakao" onclick="v33BeginLogin('kakao')">카카오로 계속하기</button><button class="v33-auth-btn apple" onclick="v33BeginLogin('apple')">Apple로 계속하기</button><button class="v33-auth-btn google" onclick="v33BeginLogin('google')">Google로 계속하기</button><button class="v33-auth-btn email" onclick="navigate('authEmail')">이메일로 계속하기</button><p class="v33-auth-legal">프로토타입에서는 실제 인증 대신 로그인 흐름을 시뮬레이션해요.</p></div></div>`}
 routes.authEmail=()=>`<div class="v33-setup"><div><button class="back" onclick="goBack()">‹</button></div><h1>이메일로 로그인</h1><p class="lead">실제 서비스에서는 인증 서버와 연결돼요. 지금은 입력·오류·세션 복구 흐름을 확인할 수 있어요.</p><div class="v33-setup-fields"><div class="v33-setup-field"><label>이메일</label><input id="v33Email" class="input" type="email" autocomplete="email" placeholder="name@example.com"></div><div class="v33-setup-field"><label>비밀번호</label><input id="v33Password" class="input" type="password" autocomplete="current-password" placeholder="4자 이상"></div></div><div class="v33-setup-actions"><button class="primary" onclick="v33SubmitEmailLogin()">로그인</button></div></div>`
@@ -1532,7 +1559,7 @@ routes.planLoading=()=>{const stage=state.v33.loading?.stage||0;return `<div cla
 routes.errorState=({type}={})=>{const t=type||state.v33.lastError?.type||'generic';if(t==='network')return `<div class="v33-error"><div class="v33-error-icon">↯</div><h1>인터넷 연결을 확인해주세요.</h1><p>작성한 지역과 시간은 그대로 두었어요. 연결되면 다시 시도하거나 지금은 예시 데이터로 흐름을 계속 볼 수 있어요.</p><div class="v33-error-actions"><button class="main" onclick="v33RetryLastError()">다시 시도</button><button class="sub" onclick="v33UseCachedPlan()">예시 데이터로 계속</button></div></div>`;return `<div class="v33-error"><div class="v33-error-icon">!</div><h1>잠시 문제가 생겼어요.</h1><p>작성하던 내용은 그대로 두었어요. 다시 시도해도 안 되면 홈에서 조건을 조금 바꿔주세요.</p><div class="v33-error-actions"><button class="main" onclick="goBack()">이전 화면으로</button></div></div>`}
 routes.connectionHelp=()=>`${pagebar('연결 상태')}<div class="section compact"><h1 style="font-size:28px;letter-spacing:-.9px;margin:8px 0">오프라인이어도 작성 내용은 잃지 않아요.</h1><div class="section-sub">네트워크가 끊겼다고 자동으로 로그아웃하지 않아요. 일정·메모 같은 로컬 기능은 계속 쓸 수 있고 장소 검색·예약 같은 온라인 기능만 연결될 때 다시 시도해요.</div><div class="v33-tip" style="margin-top:22px"><b>세션이 만료된 경우</b><br>다시 로그인 화면을 보여주되 현재 화면과 작성 중인 내용을 기억해뒀다가 로그인 후 그대로 복원해요.</div></div>`
 routes.coupleSettings=()=>`${pagebar('커플 연결')}<div class="section compact"><div class="v33-couple-card"><b>${state.v33.couple.status==='linked'?`<span class="v33-status-dot"></span>${esc(state.profile.partner)}님과 연결됨`:`<span class="v33-status-dot off"></span>현재 혼자 사용 중`}</b><p>${state.v33.couple.status==='linked'?'질문·일정·버킷·추억을 같은 커플 공간에서 동기화하는 구조예요.':'언제든 초대 코드로 연인을 연결할 수 있어요.'}</p></div>${state.v33.couple.status==='linked'?`<button class="secondary danger" style="width:100%;margin-top:12px" onclick="v33DisconnectCouple()">커플 연결 해제</button>`:`<button class="primary" style="margin-top:12px" onclick="state.v33.setup.coupleDone=false;state.v33.couple.flow=null;if(!save())return;nav=[{route:'setupCouple',params:{}}];render()">연인 연결하기</button>`}</div>`
-routes.qaLab=()=>`${pagebar('개발 · QA')}<div class="section compact"><div class="section-sub">실제 API를 붙이기 전에 느린 통신, 오프라인, 사진 실패, 세션 만료 같은 상황을 강제로 재현해요.</div><div class="v33-qa-grid"><button class="${state.v33.network.mode==='online'?'v33-qa-active':''}" onclick="v33SetNetwork('online')">정상<small>일반 응답 속도</small></button><button class="${state.v33.network.mode==='slow'?'v33-qa-active':''}" onclick="v33SetNetwork('slow')">느림<small>로딩 상태 길게</small></button><button class="${state.v33.network.mode==='offline'?'v33-qa-active':''}" onclick="v33SetNetwork('offline')">오프라인<small>온라인 기능 오류</small></button><button onclick="v33ExpireSession()">세션 만료<small>다시 로그인 후 복원</small></button><button onclick="navigate('qaPhoto')">사진 실패<small>fallback 확인</small></button><button onclick="navigate('qaEmpty')">빈 화면<small>다음 행동 제공</small></button><button onclick="navigate('qaLongText')">긴 텍스트<small>레이아웃 스트레스</small></button><button onclick="v33SetSaveFail(!state.v33.qa.saveFail)">${state.v33.qa.saveFail?'저장 실패 끄기':'저장 실패 켜기'}<small>Quota 오류 재현</small></button></div></div>`
+routes.qaLab=()=>`${pagebar('개발 · QA')}<div class="section compact"><div class="section-sub">실제 API를 붙이기 전에 느린 통신, 오프라인, 사진 실패, 세션 만료 같은 상황을 강제로 재현해요.</div><div class="v33-qa-grid"><button class="${state.v33.network.mode==='online'?'v33-qa-active':''}" onclick="v33SetNetwork('online')">정상<small>일반 응답 속도</small></button><button class="${state.v33.network.mode==='slow'?'v33-qa-active':''}" onclick="v33SetNetwork('slow')">느림<small>로딩 상태 길게</small></button><button class="${state.v33.network.mode==='offline'?'v33-qa-active':''}" onclick="v33SetNetwork('offline')">오프라인<small>온라인 기능 오류</small></button><button onclick="v33ExpireSession()">세션 만료<small>다시 로그인 후 복원</small></button><button onclick="navigate('qaPhoto')">사진 실패<small>fallback 확인</small></button><button onclick="navigate('qaEmpty')">빈 화면<small>다음 행동 제공</small></button><button onclick="navigate('qaLongText')">긴 텍스트<small>레이아웃 스트레스</small></button><button onclick="v33SetSaveFail(!state.v33.qa.saveFail)">${state.v33.qa.saveFail?'저장 실패 끄기':'저장 실패 켜기'}<small>Quota 오류 재현</small></button></div>${v38ProviderQACard()}</div>`
 routes.qaPhoto=()=>`${pagebar('사진 실패 테스트')}<div class="section compact"><div class="result-img"><img src="data:image/png;base64,broken" alt="실패 테스트"></div><div class="v33-tip">이미지가 실패해도 빈 흰칸 대신 일관된 기본 이미지가 보여야 해요.</div></div>`
 routes.qaEmpty=()=>`${pagebar('빈 화면 테스트')}<div class="section compact">${v33Empty('♡','아직 함께 기록한 데이트가 없어요.','첫 코스를 만들어보면 일정과 추억이 여기부터 쌓여요.','첫 데이트 만들기',`switchTab('home');setTimeout(openV22Composer,50)`)}</div>`
 routes.qaLongText=()=>`${pagebar('긴 텍스트 테스트')}<div class="section compact"><div class="feed-card"><div class="feed-pad"><div class="feed-kicker">긴 장소명</div><div class="feed-title">롯데시네마 수퍼플렉스 광명아울렛점 리뉴얼 스페셜관</div><div class="feed-desc">경기도 광명시 일직로 17 광명역복합터미널 초장문 주소 테스트 · 영업시간 정보가 없거나 매우 긴 경우에도 버튼과 텍스트가 겹치지 않아야 해요.</div><button class="feed-action">다음 행동이 잘 보이는지 확인</button></div></div></div>`
@@ -1544,5 +1571,780 @@ render();
 
 function v32InstallImageFallbacks(){document.querySelectorAll('img').forEach(img=>{if(img.dataset.fallbackBound)return;img.dataset.fallbackBound='1';if(!img.complete)img.classList.add('v33-img-loading');img.addEventListener('load',()=>img.classList.remove('v33-img-loading'));img.addEventListener('error',()=>{img.onerror=null;img.classList.remove('v33-img-loading');img.classList.add('v33-img-fallback');img.src='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="#f4f5f6"/><g fill="none" stroke="#c4c8cd" stroke-width="14" stroke-linecap="round"><path d="M250 310l95-98 74 72 58-56 83 82"/><circle cx="314" cy="160" r="26"/></g><text x="400" y="390" text-anchor="middle" font-family="sans-serif" font-size="24" fill="#8c9198">사진을 불러오지 못했어요</text></svg>')})})}
 </script>
+
+<!-- CHATGPT_SESSION_HANDOFF
+# MOMENT / 모먼트 v38 — 새 채팅 전체 인수인계 컨텍스트
+
+> **사용법:** 새 ChatGPT 채팅에서 이 파일과 `index.html`을 함께 올리거나, `index.html` 하나만 올려도 됩니다. `index.html` 하단에도 이 인수인계 문맥이 HTML 주석으로 포함되어 있습니다. 새 채팅의 어시스턴트는 이 문서를 **현재 제품의 권위 있는 기준 상태(authoritative state)** 로 취급하고, 사용자가 이전 맥락을 다시 설명하게 하지 말아야 합니다.
+
+—-
+
+## 0. 새 채팅 어시스턴트에게 주는 최우선 지시
+
+이 프로젝트는 한국어 커플/데이트 앱 **모먼트(MOMENT)** 의 단일 HTML 프로토타입이다. 사용자는 제품 오너처럼 직접 UX를 검수하며, 매우 구체적으로 불편한 부분을 지적한다. 답변은 한국어로, 군더더기 없이 직접적으로 한다. 사용자가 버그를 하나 찾으면 그 부분만 고치지 말고 **인접 흐름과 같은 유형의 오류를 함께 전수검사**해야 한다.
+
+반드시 지킬 것:
+
+1. **현재 최신 기준본은 이 파일에 함께 제공된 `index.html`** 이다.
+2. 이전 버전으로 회귀하지 말 것.
+3. 기능을 새로 붙일 때는 기존 로직/저장/캘린더/live/커플 콘텐츠를 깨뜨리지 말 것.
+4. 사용자가 직접 버그를 하나씩 찾게 만들지 말고, 수정 후 주변 흐름까지 선제적으로 검수할 것.
+5. “오류 하나도 없다” 같은 표현은 실제 검증이 없으면 하지 말 것.
+6. 단일 HTML 프로토타입이지만, 실제 서비스로 갈 수 있도록 provider / state / UI의 책임을 분리하는 방향을 유지할 것.
+7. **API 키나 비밀값은 코드/인수인계 문서에 절대 넣지 말 것.** 과거 대화에서 키가 제공된 적이 있어도 새 채팅에서 재노출하지 말고 환경변수/서버 프록시 방식으로만 다룬다.
+8. 사용자가 “멍청한 사용자도 쓸 수 있게”를 중요하게 본다. 모든 화면은 다음 행동이 명확해야 하며, 입력값을 받았다면 반드시 이후 어디선가 확인/수정할 수 있어야 한다.
+
+—-
+
+## 1. 제품 한 줄 정의
+
+**“언제/어디서 만날지만 알려주면, 데이트 코스부터 이동·시간 관리·귀가·기록까지 실제 데이트를 운영해주는 앱.”**
+
+단순 장소 추천 앱이 아니다. 내부적으로는 **Date OS / 데이트 실행 앱**에 가깝다.
+
+경쟁 포지션:
+- 데이트팝/데이트립: 어디 갈지 찾는 앱
+- 오디: AI 코스 추천
+- 썸원/비트윈/The Couple: 커플 소통/기록
+- TimeTree: 일정 공유
+- **모먼트: 데이트 계획 → 실제 이동 → 체류 → 조정 → 귀가 → 기록까지 한 흐름으로 운영**
+
+핵심 차별점은 **실시간 데이트 진행 모드**다.
+
+—-
+
+## 2. 디자인 원칙
+
+사용자가 강하게 싫어했던 것:
+- AI 양산형 랜딩페이지 느낌
+- 큰 파스텔 히어로 + AI 라벨 + 설명 칩 3개
+- 과한 그라데이션
+- 의미 없는 배지/상태 점
+- 카드 박스 남발
+- 작은 글씨
+- 정보가 한 화면에 너무 많이 경쟁하는 구조
+- 사진 위 텍스트가 겹쳐 가독성이 깨지는 UI
+- 버튼이 화면을 계속 가리는 fixed CTA
+
+현재 방향:
+- **화이트 베이스**
+- 현대적인 한국 소비자 앱 느낌
+- 큰 타이포 + 넉넉한 여백
+- 카드보다는 섹션/행 중심
+- 한 화면에 대표 행동 하나
+- 사진은 필요할 때만, 텍스트 가독성을 깨지 않게 독립 미디어 영역으로 사용
+- 메인 기능 존재감은 장식이 아니라 **위계와 행동 구조**에서 나온다
+- 탭: **홈 / 데이트 / 라운지 / 우리**
+
+타이포 시스템은 Display / Page / Section / Card / Body / Caption 정도의 제한된 단계로 유지한다.
+
+마이크로 인터랙션은 짧고 기능적인 수준만:
+- 버튼 pressed
+- 바텀시트
+- 화면 진입
+- skeleton
+- 오늘 콘텐츠 좌우 전환
+- 저장 완료
+과장된 AI식 움직임은 금지.
+
+—-
+
+## 3. 첫 5분 경험 — 매우 중요
+
+최초 사용자 플로우:
+
+**로그인 → 기본정보 → 커플연동 선택 → 첫 데이트 입력 → 단계별 로딩 → 추천 → 코스 상세**
+
+로그인 목업:
+- 카카오
+- Apple
+- Google
+- 이메일
+
+첫 기본정보는 최소:
+- 이름/별명
+- 자주 만나는 지역(선택)
+
+커플연동은 강제하지 않음:
+- 내가 초대하기 → 6자리 코드 생성/복사/공유
+- 받은 코드 입력
+- 지금은 혼자 시작
+- 나중에 설정에서 다시 연결 가능
+
+첫 코스는 처음부터 예산/교통/컨디션을 다 묻지 않는다.
+우선:
+- 어디서 만나나요?
+- 언제 만나나요?
+만 받고 첫 성공 경험을 만든다.
+
+사용자가 앱 설치 후 **5분 내 “이거 실제 데이트에 따라가면 되겠네”** 라고 느끼는 게 목표다.
+
+—-
+
+## 4. 로그인 / 세션 / 네트워크 설계
+
+현재는 mock auth/provider지만 UX는 구현되어 있다.
+
+원칙:
+- **네트워크 끊김 ≠ 로그아웃**
+- 오프라인이어도 로컬 일정/메모 등은 유지
+- 온라인 기능만 재시도
+- 세션이 진짜 만료됐을 때만 로그인 화면
+- 재로그인 후 이전 화면/작성 상태로 복귀
+
+오류 예시:
+- 인터넷 연결 확인 → `다시 시도` / `예시 데이터로 계속`
+- 세션 만료 → `다시 로그인하면 보던 화면으로 돌아가요`
+- 저장 실패 → 성공 토스트 금지, 화면 이동 중단
+
+QA 시 강제로 테스트해야 할 상태:
+- 정상
+- 느린 네트워크
+- 오프라인
+- 세션 만료
+- 사진 실패
+- 결과 0개
+- 긴 장소명
+- 주소 없음
+- 영업시간 없음
+- localStorage 저장 실패
+
+—-
+
+## 5. 홈 구조
+
+홈은 기능 백화점처럼 만들지 않는다.
+
+핵심 상단:
+- **데이트 코스 짜기**
+- **이미 데이트 중이에요 · 지금 뭐 하지?**
+
+데이트 코스 짜기 버튼을 누르면 composer / bottom sheet에서 필요한 값을 받는다.
+현재 위치 사용 기능이 일반 코스 짜기에도 있다.
+
+그 아래는 조용한 섹션:
+- 오늘 우리 둘
+- 다가오는 것
+- 우리의 최근
+- 라운지 인기글
+
+진행 중 live가 있으면 홈 상단에 `진행 중인 데이트 / 이어서 하기`가 나온다.
+
+중요: **진행 중이거나 잠시 나가기로 보존된 live가 있으면 새 코스 생성을 그대로 허용하면 안 된다.**
+현재 최신 빌드는 충돌 시:
+- 기존 데이트 이어가기
+- 기존 진행 종료 후 새 코스 만들기
+를 명확히 고르게 한다.
+
+—-
+
+## 6. 전국 지역 / 다양한 데이트 추천
+
+초기 성수/강남/건대 고정 데이터셋은 폐기 방향.
+
+사용자는 전국 어디든 입력 가능해야 한다:
+- 전주 효자동
+- 원주 무실동
+- 제주 애월
+- 거창읍
+- 청주 복대동
+- 역/동네/시군구 단위 등
+
+현재 실제 외부 장소 API 전이라 mock place provider를 사용하지만 UI/로직은 전국형으로 구성.
+
+데이트는 트렌디한 카페/전시만 추천하지 않는다.
+가능한 유형 예:
+- 동네 식당 → 산책 → 코노 → PC방
+- 공원 → 영화 → 술
+- 밥 → 볼링 → PC방
+- 시장 → 산책 → 술
+- 밥 → 영화 → 카페
+- 시장 → 드라이브 → 야경
+- 쇼핑 → 식사 → 놀거리
+- 문화/실내/드라이브/동네 데이트
+
+카테고리 후보:
+식사, 분식, 공원, 산책, 영화, 코인노래방, PC방, 볼링, 카페, 술, 시장, 쇼핑, 전시, 드라이브, 야경, 실내 놀거리 등.
+
+추천 엔진의 hard constraints:
+- 예산 초과 금지
+- 사용 가능한 데이트 시간 초과 금지
+- 귀가 마지노선 초과 금지
+
+조건이 너무 빡빡하면 억지로 장소 수를 채우지 말고 코스를 축소하거나 대안을 설명한다.
+
+`조금 더 저렴하게` 같은 대안 라벨은 실제 계산 결과를 비교해서만 붙인다.
+
+—-
+
+## 7. 추천 결과 / 코스 확정
+
+추천 결과는 3개를 똑같이 경쟁시키지 않는다.
+- 1순위 추천을 가장 명확히
+- 대안은 실제 특성에 따라 저렴하게 / 이동 적게 / 특별하게 등
+
+CTA 최신 문구:
+- `코스 보기`
+- **`이대로 결정할게요`**
+
+두 버튼의 아이콘/높이/비율은 동일해야 한다.
+
+코스 상세 CTA:
+- `일정·코스 수정`
+- `데이트 시작`
+두 버튼 크기도 동일.
+
+### 확정 직후 플로우
+`이 코스로 확정` 후 화면에 남겨두지 않는다.
+`코스가 확정됐어요` 시트에서 다음 행동을 제공:
+- 지금 데이트 시작
+- 홈으로 가기 / 일정 보기
+
+오늘/현재에 가까운 일정이면 시작을 강조하고, 미래 일정이면 홈/일정 쪽을 자연스럽게 우선시한다.
+
+확정 상태는 홈의 다가오는 데이트와 캘린더에 반영되어야 한다.
+
+—-
+
+## 8. 코스 상세
+
+중요한 과거 버그:
+- 이미지가 텍스트 영역까지 덮음
+- 하단 `데이트 시작` fixed CTA가 스크롤 내내 내용을 가림
+
+현재 원칙:
+- 사진 영역과 텍스트 영역 완전 분리
+- 밝은/어두운 사진과 무관하게 텍스트는 불투명 배경 위
+- CTA는 콘텐츠 흐름 안에 자연스럽게 배치
+- 장소명, 주소, 시간, 비용, 이동 정보가 이미지 때문에 안 보이면 안 됨
+
+`이 코스를 추천한 이유`는 고정 문구 금지.
+실제 코스 구성, 예산, 이동시간, 귀가시간, 데이트 스타일을 보고 동적으로 생성해야 한다.
+
+—-
+
+## 9. 실제 데이트 진행 모드 — 핵심 기능
+
+데이트 시작 시 첫 장소에 이미 도착한 것으로 시작하면 안 된다.
+
+정상 흐름:
+**데이트 시작 → 현재 위치에서 첫 장소로 이동 → 도착 → 첫 장소 체류 → 다음 장소 이동 → ... → 귀가/종료**
+
+live 상태는 대략:
+- to_first
+- moving
+- at
+- paused/active
+- ended
+
+### 첫 장소 이동 / 장소 간 이동
+교통수단:
+- 도보
+- 대중교통
+- 택시
+- 자차
+
+목적지 주소는 이동 중에도 항상 확인 가능해야 한다.
+
+### 대중교통 상세
+버스:
+- 타는 정류장명
+- 정류장 번호
+- 어느 방향 정류장인지
+- 가능한 버스 번호 여러 개
+- 추천 버스
+- 가장 빠른 버스 / 다음 버스
+- 몇 정거장
+- 내리는 정류장
+- 하차 후 방향
+
+지하철:
+- 역명
+- 호선
+- 방면
+- 승강장
+- 빠른 열차 / 다음 열차
+- 몇 정거장
+- 하차역
+- 출구
+- 빠른 하차 추천 칸
+
+현재 값은 mock. 실제 API 연결 시 provider만 교체하는 방향.
+
+### 체류시간
+추천 체류시간은 실시간으로 초 단위 감소.
+- 10분 남음 알림
+- 5분 남음 알림
+- `다음 장소로 출발`
+- `10분 더 있을래요`
+- `10분 일찍 갈래요`
+
+정확한 규칙:
+- 현재 보이는 남은 시간 기준 ±10분
+- 이미 시간이 만료된 상태에서 +10 → **지금부터 정확히 10분**
+- 남은 시간이 10분 이하인데 -10 → 즉시 현재 장소 종료 후 다음 이동
+
+앞 코스에서 늦어지면 뒤 장소 추천 체류시간도 일정에 맞게 재조정될 수 있어야 한다.
+
+### 잠시 나가기
+현재 장소/이동 단계/교통수단/사진 등을 보존하고 홈에서 이어가기.
+
+중요: 잠시 나간 live가 있는 상태에서 새 데이트 코스 생성은 충돌 UX로 막는다.
+
+### 종료
+실수 방지를 위해 즉시 종료하지 말고 확인 단계 제공.
+
+—-
+
+## 10. 사진 / 추억 / 데이트 마무리
+
+진행 중:
+- 사진 찍기/사진 추가 가능
+- 현재 장소의 추억으로 저장
+- 프로토타입 상한 10장
+- 10/10에서 추가 불가 안내, 오래된 사진 몰래 삭제 금지
+
+마무리에서 의미 없는 `사진 수 직접 입력`은 제거됨.
+실제 live에서 남긴 사진 개수로 기록.
+
+마무리 기록:
+- 실제 시작~종료 시간 기반 함께한 시간
+- 자동 코스 비용은 `예상 비용`
+- 사용자가 실제 금액을 넣은 경우만 `실제 비용`
+- 사용자 평가를 하지 않았는데 임의 4.8 같은 만족도 생성 금지
+- 만족도는 직접 선택 시만 저장
+
+`오늘 한 줄`보다 커플다운 구조:
+- 나 → 연인에게 하고 싶은 말
+- 연인 → 나에게 하고 싶은 말
+- 나중에 기록 상세에서 추가/수정 가능
+
+사진은 실제 서비스에서 서버/object storage로 이동해야 한다. localStorage base64는 프로토타입 한계.
+
+—-
+
+## 11. 데이트 탭 / 캘린더
+
+데이트 탭의 메인은 월간 캘린더.
+
+점 규칙:
+- 지난 일정: 회색 점
+- 예정 일정: 빨간 점
+
+캘린더에:
+- 하단 `+ 일정 추가`
+- 화면 우하단에 **항상 따라다니는 fixed FAB + 버튼**
+둘 다 존재.
+
+FAB는 콘텐츠 최하단에 붙어 있으면 안 된다.
+키보드가 올라오면 가리지 않도록 숨기거나 이동.
+
+일정 추가:
+- 데이트 이름
+- 날짜
+- 시간
+- 지역
+- 메모
+
+중요: **메모를 입력받았다면 캘린더/일정 상세에서 실제 메모 내용이 보여야 한다.** `메모 있음` 같은 불친절한 표현만 보여주면 안 된다.
+
+일정 상세:
+- 기존 메모 표시
+- 수정 시 기존 값 prefill
+- 날짜/시간/지역/메모 수정
+- 코스가 없으면 고르기
+- 이미 있으면 코스 변경
+- 확정 일정 취소 가능
+
+일정에 코스를 붙이는 순간 planId만 저장하지 말고 일정별 **코스 snapshot** 보존. 다른 추천을 생성해도 일정 코스가 사라지면 안 된다.
+
+일정 시간 변경 시 코스 타임라인도 재계산.
+
+일정 지역을 변경해서 기존 코스 지역과 달라지면 기존 코스를 자동 분리하고 `고민 중 후보`로 보존.
+
+`코스 고민 중` 빈 상태는 중앙 정렬된 정상적인 empty state.
+후보 코스 상세 마지막에는:
+**“이 코스, 언제 즐기고 싶어요?”**
+날짜/시간을 골라 캘린더에 넣을 수 있다.
+
+—-
+
+## 12. 기념일
+
+홈의 다음 기념일을 누르면 우리 탭으로 보내지 말고 **기념일 전용 페이지**.
+
+자동 계산:
+- 100일
+- 200일
+- 300일
+- ...
+
+정확히 D+100 당일을 건너뛰면 안 됨.
+
+사용자 추가:
+- 생일
+- 첫 여행
+- 처음 만난 날
+- 사용자 기념일
+- 매년 반복 여부
+- 수정/삭제
+
+과거 1회성 기념일이 `오늘`처럼 보이면 안 된다.
+
+—-
+
+## 13. 오늘 우리 둘 / 커플 체류 기능
+
+커뮤니티 외에도 데이트 없는 날 들어올 이유를 만든다.
+
+### 가벼운 오늘 콘텐츠
+- 오늘의 10초 선택
+- 오늘의 밸런스
+- 오늘의 질문
+
+홈과 우리 탭에서 동일한 캐러셀 UX.
+- 좌우 화살표
+- 모바일 스와이프
+- 자연스러운 슬라이드
+- 넘길 때 전체 페이지 rerender / scroll top 이동 금지
+
+10초 선택 완료 → 기본 다음 추천은 밸런스 → 질문 순서지만 사용자가 자유롭게 넘길 수 있다.
+
+질문:
+- 내 답 수정 시 기존 답 prefill
+- `연인이 답하면 알려드릴까요?`
+- 켰다면 `연인이 답하면 알려드릴게요.`
+- 끌 때 `연인 답장 알림을 끌까요?`
+- 내 선택 전에는 연인 답을 미리 노출하지 않는 콘텐츠는 그 규칙 유지
+
+### 오늘 기록 / 체류 기능
+- 오늘 기분 체크
+- 오늘 미션
+- 둘만의 한마디
+- 이번 주 우리
+- 우리 버킷
+- 타임캡슐
+- 추억 꺼내보기
+
+홈에는 이 모든 걸 늘어놓지 말고 `오늘 우리 둘` 진입점으로 정리.
+
+실제 서비스에서 연인 데이터는 상대 기기에서 입력되어야 하며, 한 기기에서 연인 값을 대신 넣는 목업은 프로토타입임을 구분.
+
+—-
+
+## 14. 라운지 커뮤니티
+
+익명 프로필 맥락 예:
+- 연애 3년차 · 서울
+- 장거리 · 경기
+
+개인 실제 이름/집주소/정확한 기념일 등과 커뮤니티 익명 프로필은 분리.
+
+카테고리:
+- 전체
+- 데이트 추천
+- 연애 고민
+- 선물·기념일
+- 맛집·장소
+- 장거리
+
+기능:
+- 글 작성
+- 댓글
+- 공감
+- 카테고리 필터
+- 숨기기/신고
+- 커뮤니티 장소 → 우리 위시리스트 저장
+
+### 최신 소유자 기능
+내가 작성한 글:
+- **수정 가능**
+- **삭제 가능**
+- 수정 폼에 기존 제목/본문/카테고리 prefill
+- 삭제 확인 필요
+
+다른 사람이 쓴 글:
+- 수정/삭제 금지
+- 숨기기/신고만
+
+라운지 우하단 `+` FAB 역시 **스크롤 위치와 관계없이 화면에 fixed**.
+
+—-
+
+## 15. 위시리스트 / 버킷 / 타임캡슐
+
+위시리스트:
+- 가고 싶은 곳
+- 우리 버킷
+
+전국 어느 지역의 장소도 직접 입력 가능.
+위시리스트와 싫어요 데이터는 다음 추천에 반영.
+
+싫어요 이유 예:
+- 너무 비싸요
+- 멀어요
+- 이미 가봤어요
+- 취향 아니에요
+- 오늘은 아니에요
+
+버킷:
+- 장소뿐 아니라 행동 저장
+- 완료 처리
+
+타임캡슐:
+- 미래 날짜
+- 그 전에는 내용 잠김
+- 날짜 이후 열림
+
+—-
+
+## 16. 빈 화면 / 로딩 / 오류 / 사진 실패 / 키보드
+
+### Empty states
+단순 `없어요`로 끝내지 않는다.
+항상:
+- 왜 비었는지
+- 다음에 무엇을 하면 되는지
+- 필요한 경우 CTA
+를 제공.
+
+대상:
+- 예정 데이트 없음
+- 후보 코스 없음
+- 기록 없음
+- 위시리스트 없음
+- 버킷 없음
+- 기념일 없음
+- 댓글 없음 등
+
+### Loading
+API 전에도 mock delay로 테스트.
+코스 생성 단계 예:
+- 주변 장소 후보 찾기
+- 동선과 이동시간 비교
+- 예산·귀가시간에 맞춰 정리
+
+### Error
+사용자를 막아두지 말고 복구 행동 제공.
+예:
+- 다시 시도
+- 지역 넓혀 찾기
+- 조건 완화
+- 홈/코스로 돌아가기
+
+### Image fallback
+외부 이미지 실패 시 깨진 아이콘/빈 박스 금지.
+- skeleton during loading
+- 실패 시 fallback visual
+- 사진이 없어도 레이아웃이 자연스러움
+
+### Keyboard
+입력 화면에서 키보드가 저장 버튼을 가리면 안 됨.
+- focus 시 scroll into view
+- bottom nav/FAB 조정
+- input 최소 16px
+- 실제 iOS/Android 실기기 최종 검수 필요
+
+—-
+
+## 17. 현재 Mock API / 향후 실제 API
+
+지금은 API 없이도 플로우를 끝까지 검수할 수 있도록 mock provider를 사용한다.
+
+향후 실제 API 우선순위:
+1. 전국 장소 검색 / 주소 / 좌표
+2. 지도 / 거리 / 도보·자차 경로
+3. 대중교통
+4. GPS 현재 위치
+5. 날씨
+6. 영화 상영시간 / 예약 / 주차 / 혼잡
+7. 백엔드 로그인 / 커플연결 / 동기화
+8. 사진 서버 저장
+
+중요: 실제 API 코드를 화면 곳곳에 직접 박지 않는다.
+인터페이스 예:
+- searchPlaces()
+- getRoute()
+- getTransit()
+- getWeather()
+
+현재 Mock Provider → 나중 Real Provider 교체 구조 유지.
+
+API가 실제로 붙은 뒤 반드시 재검수할 데이터 엣지:
+- 엄청 긴 상호명
+- 사진 없음
+- 주소 없음
+- 영업시간 없음
+- 폐업/휴무
+- 느린 응답
+- 0개 결과
+- 네트워크 중단
+- 버스/지하철 경로 없음
+
+—-
+
+## 18. 데이터/안정성 원칙
+
+주요 엔티티를 섞지 않는다:
+- **Plan** = 장소/동선 중심의 코스
+- **Schedule/Event** = 날짜/시간/지역/메모 + 코스 스냅샷
+- **Live** = 실제 진행 상태
+- **Record** = 실제 완료 결과
+
+중복된 날짜/시간 값이 서로 따로 놀지 않게 관리.
+
+저장 실패 시 성공 처리 금지.
+
+신규 사용자는 데모용 과거 기록/가짜 연애 데이터가 보이면 안 된다.
+데모 데이터와 실제 초기상태 분리.
+
+사용자/API 문자열을 inline JS에 직접 삽입해 문법이 깨지지 않도록 안전하게 처리.
+
+현재 단일 HTML 프로토타입이지만 function/route 중복 정의를 만들지 않는 **clean build 원칙** 유지.
+
+—-
+
+## 19. 최신 빌드에서 이미 잡은 주요 회귀 버그 — 다시 만들지 말 것
+
+- 결과/상세 뒤로가기 루프
+- 서브페이지 하단 빈 네비 공간
+- 교통수단 변경이 live에 반영되지 않음
+- 저장한 live가 처음부터 재시작
+- 체류시간 ±10 기준 불명확
+- 10분 이하 조기 출발이 안 됨
+- 첫 장소 이동 없이 바로 첫 코스 시작
+- 대중교통 정보가 `버스 타기` 수준으로 너무 빈약
+- 코스 이미지가 텍스트를 덮음
+- `데이트 시작` fixed CTA가 내용을 가림
+- 지난 일정이 예정에 표시
+- 일정 메모 입력 후 어디에도 안 보임
+- 일정에 코스 붙인 뒤 새 추천하면 코스 유실
+- 일정 시간 수정과 코스 타임라인 불일치
+- 일정 지역 변경과 기존 코스 지역 불일치
+- D+100 당일 건너뜀
+- 과거 1회성 기념일이 오늘처럼 표시
+- 가짜 만족도 4.8 자동 기록
+- 계획시간을 실제 함께한 시간으로 저장
+- 사진 수 직접 입력
+- 사진 10장 넘으면 조용히 첫 사진 삭제
+- 저장 실패인데 `저장했어요` 토스트
+- 긴/특수문자 입력으로 onclick 깨짐
+- 오늘 콘텐츠 넘길 때 페이지 최상단으로 튐
+- 홈 기능이 너무 많아 난잡함
+- 오늘의 우리 / 둘만의 오늘처럼 이름이 겹쳐 이해하기 어려운 구조
+- FAB가 페이지 끝에 붙어 있어 스크롤해야 보이는 문제
+- 내 라운지 글 수정/삭제 불가
+- 진행 중 live가 있는데 새 코스 생성 가능
+- 확정 후 사용자가 다음에 뭘 해야 할지 애매함
+
+—-
+
+## 20. 버전 주요 역사
+
+- v11: 풀 mock의 본격 기준점
+- v14: 홈 섹션 정리, 화이트 UI 안정화
+- v23: 전국 지역 + 다양한 일상 데이트 추천
+- v27: 버스/지하철 상세
+- v28: 체류시간/사진/캘린더/기념일/질문 UX 확장
+- v30: 추천 hard constraint + 데이터 안정화
+- v31: 커뮤니티 외 체류 기능(기분/미션/한마디/버킷/타임캡슐)
+- v32: 중복 코드 정리 clean build
+- v33: 로그인/세션/커플연동/첫 5분 + 오류/로딩/empty/fallback
+- v34: fixed FAB, 일정 메모/현재위치/입력→표시 연결 전수 보강
+- v35: 코스 확정 후 시작/홈 선택 플로우
+- v36: 라운지 내 글 수정/삭제, 메모 내용 직접 노출, CTA 문구/크기 통일, live 충돌 시 신규 코스 차단
+- v37: v36 기능을 유지한 새 채팅 인수인계 패키지
+- **v38: 최신 기준 — 장소 검색 provider 경계, 서버 프록시 계약, 응답 정규화, 실패 시 최근 결과/예시 데이터 복구, `moment_v38` 상태 마이그레이션**
+
+—-
+
+## 21. v36 인수 당시 검수 상태
+
+v36 신규 테스트:
+- 29 assertion / 실패 0
+
+v34 호환 회귀:
+- 33 assertion / 실패 0
+
+추천 스트레스:
+- 총 1,458개 코스
+- 예산 초과 0
+- 지정시간 초과 0
+- 귀가 마지노선 초과 0
+
+코드:
+- function declarations 305 / unique 305
+- routes 54 / unique 54
+- JS syntax check 통과
+
+환경상 실제 iPhone/Android 실기기 safe-area/키보드/관성 스크롤은 별도 최종 검수가 필요.
+
+—-
+
+## 22. 다음 개발 우선순위
+
+이 파일을 새 채팅에 넣은 직후 무작정 새 기능을 늘리지 말 것.
+
+1. 최신 `index.html`을 실제로 읽고 구조 파악
+2. 사용자가 새로 말한 요구를 기존 기능과 충돌하지 않게 반영
+3. 동일 유형의 주변 UX 전수검사
+4. JS syntax + route smoke + recommendation stress + state interaction test
+5. 가능하면 모바일 렌더를 눈으로 확인
+6. 새 버전은 **clean build**로 생성
+7. 변경사항/검수결과/남은 한계를 솔직하게 보고
+
+실제 API 연결로 넘어간다면 가장 먼저 장소 검색부터 시작하되, UI에서 mock/real provider를 분리해서 교체 가능하게 유지한다.
+
+—-
+
+## 23. 새 채팅에서 사용자가 기대하는 작업 스타일
+
+- 질문이 명확하면 되묻지 말고 바로 작업
+- “어떻게 할까요?”보다 직접 좋은 UX를 설계해서 제안/구현
+- 사용자를 일일이 QA 담당자로 만들지 말 것
+- 버그 수정 후 같은 패턴의 버그를 함께 찾기
+- UI는 실제 사람이 쓰는 앱처럼 눈으로 보고 판단
+- 사용자가 욕설/강한 표현을 써도 방어적으로 반응하지 말고 제품 문제에 집중
+- 장황한 자기합리화 금지
+- 파일 작업 후 **최신 index.html 하나를 명확히 링크**하고 필요하면 zip/test report도 제공
+
+—-
+
+## 24. v38 장소 provider 브리지
+
+최신 기준본은 v38이다. 추천 엔진의 기존 hard constraint와 UI는 유지하면서 장소 데이터 획득 책임을 분리했다.
+
+- 공개 계약: `searchPlaces({ area, categories, limit })`
+- 기본 모드: `mock`
+- 실제 연동 모드: `proxy`
+- 프록시 요청: `GET /api/places/search?area=…&categories=…&limit=…`
+- 브라우저 HTML에는 장소 API 키를 넣지 않는다. 키와 공급자별 변환은 서버 프록시가 담당한다.
+- 외부 장소 이름·주소·ID·이미지는 정규화한 뒤 사용한다. 내부 ID는 안전한 해시로 다시 만든다.
+- 프록시가 실패하면 같은 지역의 최근 provider 결과가 있으면 재사용하고, 없으면 예시 장소로 흐름을 계속한다.
+- 추천 화면과 개발·QA 화면에서 현재 장소 데이터 출처를 확인할 수 있다.
+- 저장 키는 `moment_v38`; 기존 `moment_v36` 이하 상태를 읽어 자동 마이그레이션한다.
+
+v38 검수:
+- JS syntax 통과
+- functions 309 / unique 309
+- routes 54 / unique 54
+- 핵심 route smoke 9/9 통과
+- provider 정상 경로 3/3 통과(mock, proxy, proxy 실패 복구)
+- 추천 스트레스 1,458개: 예산·지정시간·귀가 마지노선 초과 0
+- 비밀값 패턴 스캔 0
+- 환경 샌드박스 제한으로 실제 모바일 브라우저 렌더는 이번 빌드에서 별도 확인 필요
+
+다음 실제 개발 우선순위는 서버 프록시에서 사용할 국내 장소 공급자를 선택하고 `/api/places/search` 계약에 맞춰 연결하는 것이다. 공급자 키는 서버 환경변수로만 관리한다.
+
+—-
+
+# 새 채팅 첫 응답 권장문
+
+이 문서와 최신 `index.html`을 읽었다면 새 채팅의 어시스턴트는 아래 취지로 답하면 된다:
+
+> “맥락 이어받았어. 최신 기준은 v38이고, 기존 전체 흐름과 회귀 방지 기준에 더해 장소 검색 provider/서버 프록시 경계까지 반영돼 있어. 이전 설명을 다시 받을 필요 없이 다음 요구부터 바로 이어서 작업할게.”
+
+
+END_CHATGPT_SESSION_HANDOFF -->
 </body>
 </html>
