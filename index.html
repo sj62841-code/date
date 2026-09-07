@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#e95072" />
-<title>둘이뭐해 v43 · 커플 데이트 코스와 추억</title>
+<title>둘이뭐해 v44 · 커플 데이트 코스와 추억</title>
 <style>
 
 :root{
@@ -514,6 +514,123 @@ body.v33-keyboard-open .sheet{max-height:72dvh}
   .primary,.v41-main-cta{transition:none}
 }
 
+/* v44 visual thesis: a warm daily ritual around one original couple mascot. */
+:root{
+  --bg:#fbf7ef;
+  --paper:#fffdf8;
+  --paper-2:#fff3e7;
+  --ink:#3e2d37;
+  --sub:#74636b;
+  --line:#e8ddd5;
+  --accent:#e95072;
+  --accent-soft:#ffe6ec;
+  --butter:#ffe39a;
+  --dark:#573548;
+  --shadow:0 4px 0 rgba(74,48,59,.07);
+}
+
+html,body,.app,.screen,.scroll{background:var(--bg)}
+.inner{padding-bottom:42px}
+.top.v44-top{padding:calc(18px + env(safe-area-inset-top)) 18px 15px;background:var(--bg)}
+.v44-top-copy{min-width:0}
+.v44-top .brand{font-size:24px;color:#cf3d61;letter-spacing:-.9px}
+.v44-top .brand-sub{font-size:14px;color:#88747d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v44-top .avatar{background:#fffdf8;border:1px solid #e8ccd3;box-shadow:0 3px 0 #efdee0}
+
+.v44-home{padding:0 15px 34px}
+.v44-stage{padding:22px 20px 19px;border:1px solid #ebcf83;border-radius:34px;background:#ffe6a5;box-shadow:0 5px 0 #eadfc5;overflow:hidden}
+.v44-stage-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:850;color:#80572c}
+.v44-stage-meta span{min-width:0;padding:7px 10px;border:1px solid rgba(106,72,35,.12);border-radius:999px;background:rgba(255,253,245,.62);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v44-stage h1{font-size:36px;line-height:1.08;letter-spacing:-1.6px;margin:18px 0 7px;color:#4b3040}
+.v44-stage>p{font-size:15px;line-height:1.5;color:#765660;margin:0;overflow-wrap:anywhere}
+.v44-stage-art{height:190px;display:flex;align-items:center;justify-content:center;margin:0 -12px -2px}
+.v44-stage-art img{width:min(330px,105%);height:auto;object-fit:contain;filter:none}
+.v44-stage .v44-course-button{width:100%;min-height:66px;border:0;border-radius:20px;padding:12px 17px;background:#e95072;color:#fff;box-shadow:0 4px 0 #bc3658;text-align:left}
+.v44-course-button span,.v44-course-button b{display:block}
+.v44-course-button span{font-size:19px;font-weight:900;letter-spacing:-.4px}
+.v44-course-button b{font-size:13px;margin-top:4px;opacity:.9}
+.v44-course-button:active{transform:translateY(2px);box-shadow:0 2px 0 #bc3658}
+
+.v44-quick{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:11px}
+.v44-quick button{min-width:0;min-height:61px;border:1px solid #e8dbd4;border-radius:19px;background:#fffdf8;padding:11px 13px;text-align:left;color:var(--ink);box-shadow:0 3px 0 rgba(83,55,66,.05)}
+.v44-quick b,.v44-quick span{display:block;overflow-wrap:anywhere}
+.v44-quick b{font-size:15px}
+.v44-quick span{font-size:13px;color:var(--sub);margin-top:4px}
+
+.v44-question-card{margin-top:22px;padding:21px;border:1px solid #e5d6d3;border-radius:29px;background:#fffdf8;box-shadow:0 4px 0 rgba(85,55,67,.06)}
+.v44-question-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.v44-question-head span{font-size:14px;color:#d63f64;font-weight:900}
+.v44-question-head b{font-size:13px;color:#8e7680;padding:7px 10px;border-radius:999px;background:#f8eee8}
+.v44-question-card h2{font-size:25px;line-height:1.3;letter-spacing:-.8px;margin:17px 0 8px}
+.v44-question-card>p{font-size:14px;line-height:1.55;color:var(--sub);margin:0}
+.v44-question-card>button{width:100%;min-height:52px;margin-top:18px;border:0;border-radius:17px;background:#5c394c;color:#fff;font-size:15px;font-weight:850}
+
+.v44-small-together{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.v44-small-together button{min-width:0;min-height:78px;border:1px solid #eadbd5;border-radius:20px;background:#fff4e9;padding:14px;text-align:left;color:var(--ink)}
+.v44-small-together button+button{background:#fff0f3}
+.v44-small-together b,.v44-small-together span{display:block}
+.v44-small-together b{font-size:16px}
+.v44-small-together span{font-size:13px;color:var(--sub);margin-top:5px;line-height:1.4}
+
+.v44-memory{margin-top:22px;padding:20px;border:1px solid #e7d9d4;border-radius:27px;background:#fffdf8}
+.v44-memory header{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:9px}
+.v44-memory header span{font-size:14px;color:#d63f64;font-weight:900}
+.v44-memory h2{font-size:21px;margin:4px 0 0}
+.v44-memory header b{font-size:13px;color:#8b747e}
+.v44-memory>button{width:100%;min-height:52px;border:0;border-top:1px solid #eee1db;background:transparent;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px;text-align:left;color:var(--ink)}
+.v44-memory>button span{font-size:15px;font-weight:800}
+.v44-memory>button b{font-size:19px;color:#b89da7}
+
+.v44-live{padding:24px;border-radius:30px;background:#59384a;color:#fff;box-shadow:0 5px 0 #452b3a}
+.v44-live span{font-size:14px;font-weight:850;color:#ffdbe4}
+.v44-live h1{font-size:31px;line-height:1.15;margin:9px 0 7px}
+.v44-live p{font-size:14px;line-height:1.5;margin:0;color:#eadde3}
+.v44-live button{width:100%;height:56px;margin-top:20px;border:0;border-radius:18px;background:#fff;color:#563648;font-size:16px;font-weight:900}
+
+/* Progressive question reveal: one person's action at a time. */
+.v44-question-page{padding:20px 17px 42px}
+.v44-question-sheet{padding:25px 21px;border:1px solid #ebd7cc;border-radius:31px;background:#fff5df;box-shadow:0 5px 0 #eadfd0}
+.v44-question-kicker{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#d63f64;font-size:14px;font-weight:900}
+.v44-question-kicker b{color:#967c6f;font-size:13px}
+.v44-question-sheet h1{font-size:31px;line-height:1.25;letter-spacing:-1.1px;margin:28px 0 12px}
+.v44-question-sheet>p{font-size:15px;line-height:1.6;color:var(--sub);margin:0}
+.v44-answer-area{margin-top:22px;padding:17px;border:1px solid #e9dbd2;border-radius:22px;background:#fffdf8}
+.v44-answer-area label{display:block;font-size:14px;font-weight:850;margin-bottom:9px}
+.v44-answer-area .compose{min-height:150px;background:#fff;border-color:#e8d9d2}
+.v44-answer-area .primary,.v44-answer-area .secondary{width:100%;margin-top:10px}
+.v44-answer-wait{margin-top:22px;padding:28px 18px;border:1px dashed #dcbfc5;border-radius:22px;background:#fffaf3;text-align:center}
+.v44-answer-wait strong{display:block;font-size:20px}
+.v44-answer-wait p{font-size:14px;line-height:1.55;color:var(--sub);margin:8px 0 0}
+.v44-answer-actions{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.v44-answer-actions button{border:0;background:transparent;color:#c33b5e;font-size:14px;font-weight:800}
+.v44-answer-pair{display:grid;gap:10px;margin-top:22px}
+.v44-answer-card{padding:18px;border-radius:21px;background:#fffdf8;border:1px solid #e9dbd3}
+.v44-answer-card:nth-child(2){background:#fff0f3;border-color:#ebd4da}
+.v44-answer-card span{font-size:13px;color:#b13d5a;font-weight:850}
+.v44-answer-card p{font-size:16px;line-height:1.6;margin:8px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* Carry the picture-book surfaces through the existing product, without changing its flows. */
+.v41-form-card,.v41-mode,.v41-advanced-panel,.v41-calendar-card,.v41-memory,.v41-move-steps,.v41-now-card,.v41-memory-add,.v41-us section,.v41-community-intro{border-color:#e7dad4;background:#fffdf8;box-shadow:0 4px 0 rgba(76,51,61,.05)}
+.v41-page-title>span,.v41-section-head span,.v41-date-title span,.v41-live-head span{color:#d43d62}
+.chip.on,.v41-memory-add>button,.v28-day.selected{background:#e95072!important;border-color:#e95072!important}
+.v41-route-map,.v41-memory>header{background:#fff2df}
+.bottom-nav{background:#fffdf8}
+
+@media(max-width:380px){
+  .v44-home{padding-inline:12px}
+  .v44-stage{padding-inline:17px;border-radius:30px}
+  .v44-stage h1{font-size:33px}
+  .v44-stage-art{height:170px}
+  .v44-stage-art img{width:285px}
+  .v44-quick,.v44-small-together{grid-template-columns:1fr}
+  .v44-quick button{min-height:56px}
+  .v44-question-sheet h1{font-size:28px}
+}
+
+@media(min-width:560px){
+  .v44-stage-art{height:210px}
+}
+
 </style>
 </head>
 <body>
@@ -618,7 +735,7 @@ ensureV13();
 let nav=[{route:'home',params:{}}];
 let timers=[];
 function load(){
-  for(const key of ['moment_v43','moment_v42','moment_v41','moment_v40','moment_v38','moment_v36','moment_v34','moment_v33','moment_v32','moment_v13','moment_v11']){
+  for(const key of ['moment_v44','moment_v43','moment_v42','moment_v41','moment_v40','moment_v38','moment_v36','moment_v34','moment_v33','moment_v32','moment_v13','moment_v11']){
     try{const raw=localStorage.getItem(key);if(!raw)continue;return v40NormalizeState(v40SafeJSON(raw))}
     catch(e){v40StorageIssue={key,error:'읽을 수 없는 저장 데이터'};return structuredClone(defaultState)}
   }
@@ -809,7 +926,7 @@ function buildPlan(v,i,p,pool){
   return {id:'pl_'+Date.now()+'_'+i+'_'+Math.random().toString(36).slice(2,6),type:v.type,title:titles[v.type],reason:reasons[v.type],config:{date:p.date||today(),time:p.time,area:p.area,returnTime:p.returnTime,budget:p.budget,energy:p.energy,transport:p.transport},why,cover:selected[1]?.img||selected[0]?.img||IMG.hero,places:selected,segments:segs,timeline,totalCost:best.cost,travelMin:segs.reduce((a,x)=>a+x.durationMin,0),totalHours:best.mins/60,return:best.ret,returnLeave:best.ret.leave}
 }
 
-function topHome(label='둘이뭐해'){return `<div class="top v41-top"><div><div class="brand">${esc(label)}</div><div class="brand-sub">${relationship()}${state.profile.region?` · ${esc(state.profile.region)}`:''}</div></div><button class="avatar" aria-label="내 정보" onclick="navigate('profile')">${esc(state.profile.me.slice(0,1))}</button></div>`}
+function topHome(label='둘이뭐해'){return `<div class="top v44-top"><div class="v44-top-copy"><div class="brand">${esc(label)}</div><div class="brand-sub">${relationship()}${state.profile.region?` · ${esc(state.profile.region)}`:''}</div></div><button class="avatar" aria-label="내 정보" onclick="navigate('profile')">${esc(state.profile.me.slice(0,1))}</button></div>`}
 
 function reservationText(pl){if(pl.cat==='체험'||pl.cat==='전시')return '예약 권장';if(['식사','브런치','저녁'].includes(pl.cat))return '주말 대기 가능';return '바로 방문 가능'}
 function inWishlist(pl){return state.wishlist.some(w=>w.sourceId===pl.id||w.name===pl.name)}
@@ -1060,7 +1177,7 @@ function v28DailyItems(){return [
 
 const _v27ChooseTaste=chooseTaste;
 
-routes.question=()=>`${pagebar('오늘의 질문')}<div class="section compact"><h1 class="v39-title">처음 만났을 때<br>나는 어떤 사람 같았어?</h1><p class="section-sub">한 기기에서 각자 적고 함께 읽어보세요. 답은 이 브라우저에만 저장되고, 다음 날에는 새 입력을 받아요.</p><div class="field"><label for="qAnswer" class="field-label">내 답</label><textarea id="qAnswer" class="compose" maxlength="2000" placeholder="처음의 기억을 남겨주세요">${esc(state.question.my||'')}</textarea><button class="secondary" onclick="saveQuestion()">내 답 저장</button></div><div class="field"><label for="v39PartnerAnswer" class="field-label">연인이 직접 적는 답</label><textarea id="v39PartnerAnswer" class="compose" maxlength="2000" placeholder="이 기기에서 직접 작성해주세요">${esc(state.question.partner||'')}</textarea><button class="secondary" onclick="v39SavePartnerAnswer()">연인의 답 저장</button></div></div>`;
+routes.question=()=>{const editing=!!state.v28.questionEditing,mine=state.question.my,partner=state.question.partner,both=mine&&partner;return `${pagebar('오늘의 질문')}<main class="v44-question-page"><section class="v44-question-sheet"><div class="v44-question-kicker"><span>${v31KoreanShortDate(today())}</span><b>${both?'둘의 답 공개':mine?'1/2 답변 완료':'오늘 한 번'}</b></div><h1>처음 만났을 때<br>나는 어떤 사람 같았어?</h1><p>각자 답한 뒤 함께 열어보세요. 답변은 이 기기에 날짜별로 보관돼요.</p>${!mine||editing?`<div class="v44-answer-area"><label for="qAnswer">${esc(state.profile.me)}의 답</label><textarea id="qAnswer" class="compose" maxlength="2000" placeholder="처음의 기억을 천천히 적어주세요">${esc(mine||'')}</textarea><button class="primary" onclick="saveQuestion()">${mine?'내 답 수정하기':'내 답 저장하기'}</button>${mine?'<button class="textbtn" onclick="cancelQuestionEdit()">수정 취소</button>':''}</div>`:!partner?`<div class="v44-answer-wait"><strong>내 답을 잘 보관했어요</strong><p>서로의 답은 둘 다 작성한 뒤에 보여드려요.<br>이제 연인에게 건네주세요.</p><div class="v44-answer-actions"><button onclick="editQuestion()">내 답 수정</button></div></div><div class="v44-answer-area"><label for="v39PartnerAnswer">${esc(state.profile.partner||'연인')}의 답</label><textarea id="v39PartnerAnswer" class="compose" maxlength="2000" placeholder="이 기기에서 직접 작성해주세요"></textarea><button class="primary" onclick="v39SavePartnerAnswer()">연인의 답 저장하기</button></div>`:`<div class="v44-answer-pair"><article class="v44-answer-card"><span>${esc(state.profile.me)}</span><p>${esc(mine)}</p></article><article class="v44-answer-card"><span>${esc(state.profile.partner||'연인')}</span><p>${esc(partner)}</p></article></div><div class="v44-answer-actions"><button onclick="editQuestion()">내 답 수정</button></div>`}</section></main>`};
 function editQuestion(){state.v28.questionEditing=true;if(!save())return;render()}
 function cancelQuestionEdit(){state.v28.questionEditing=false;if(!save())return;render()}
 
@@ -1194,7 +1311,7 @@ function save(){
     if(state.v33?.qa?.saveFail)throw new DOMException('QA simulated quota','QuotaExceededError');
     if(state.v33?.runtime)state.v33.runtime.lastSaveError=null;
     const serialized=JSON.stringify(state);
-    localStorage.setItem('moment_v43',serialized);
+    localStorage.setItem('moment_v44',serialized);
     v39LastCommittedState=serialized;
     v32SaveFailedUntil=0;
     return true;
@@ -1624,7 +1741,7 @@ function v31RemoveWish(id){state.wishlist=state.wishlist.filter(x=>x.id!==id);if
 function chooseTaste(v){if(state.taste.choice){toast('이미 선택했어요. “선택 변경”으로 바꿀 수 있어요.');return}state.taste.choice=v;state.v28.dailyIndex=1;v31LogDaily('taste');if(!save())return;render()}
 
 /* ----- Home: one strong date action, one compact daily-retention doorway, no extra card wall ----- */
-routes.home=()=>{const live=v36ActiveLive(),done=v41TodayDone(),area=state.planner.area||state.profile.region||'만날 지역을 정해주세요';return `${topHome()}<main class="v41-home">${live?`<section class="v41-live-home"><span>지금 데이트 중</span><h1>${esc(live.currentLabel||live.title)}</h1><p>진행 기록과 사진은 그대로 이어져요.</p><button class="v41-main-cta" onclick="resumeLive()">데이트 계속하기</button></section>`:`<section class="v41-hero"><div class="v41-hero-copy"><span class="v41-pill">전국 어느 지역이든</span><h1>우리 오늘,<br>뭐 하고 놀까?</h1><p>${esc(area)} · 시간과 예산에 맞춰 한 번에 짜드려요.</p></div><img src="${V41_MASCOT}" alt="데이트 계획을 함께 보는 둘이뭐해 캐릭터"><div class="v41-hero-actions"><button class="v41-main-cta" onclick="navigate('planner')"><span>데이트 코스 짜기</span><b>지역·시간만 정하면 돼요 →</b></button><button class="v41-now" onclick="openV29InstantComposer()">이미 만났어요 · 지금부터 짜기</button><button class="v41-trend-door" onclick="navigate('trends')"><span>요즘은 이런 게 유행해요</span><b>구경하기 ›</b></button></div></section>`}<section class="v41-today"><div class="v41-section-head"><div><span>오늘 우리 둘</span><h2>하나만 해도 충분해요</h2></div><strong>${done}/3</strong></div><div class="v41-today-grid"><button onclick="navigate('question')"><i>Q</i><b>오늘의 질문</b><span>${state.question.my?'내 답을 남겼어요':'서로를 한 번 더 알아가요'}</span></button><button onclick="navigate('checkin')"><i>☺</i><b>오늘의 기분</b><span>${v31TodayCheckin().me!=null?'내 기분을 남겼어요':'표정 하나만 고르면 돼요'}</span></button></div><button class="v41-note-row" onclick="navigate('coupleNotes')"><span>서로에게 한마디</span><b>${v31NotesToday().length?`${v31NotesToday().length}개 남김`:'30초면 남겨요'} ›</b></button></section></main>`};
+routes.home=()=>{const live=v36ActiveLive(),area=state.planner.area||state.profile.region||'만날 지역을 정해주세요',days=daysTogether(),q=v44QuestionState(),mood=v31TodayCheckin().me!=null,notes=v31NotesToday().length;return `${topHome()}<main class="v44-home">${live?`<section class="v44-live"><span>지금 함께하는 중</span><h1>${esc(live.currentLabel||live.title)}</h1><p>사진과 진행 기록을 그대로 이어갈 수 있어요.</p><button onclick="resumeLive()">데이트 계속하기</button></section>`:`<section class="v44-stage"><div class="v44-stage-meta"><span>${days?`함께한 지 ${days}일`:'둘의 시작일을 기다려요'}</span><span>추억 조각 ${v44MemoryPieces()}</span></div><h1>우리 오늘,<br>어디로 가볼까요?</h1><p>${esc(area)} · 둘의 시간과 예산에 맞춰 골라드려요.</p><div class="v44-stage-art"><img src="${V41_MASCOT}" alt="함께 지도를 보는 둘이뭐해 캐릭터"></div><button class="v44-course-button" onclick="navigate('planner')"><span>오늘 데이트 코스 짜기</span><b>지역과 시간만 정하면 돼요 →</b></button></section><div class="v44-quick"><button onclick="openV29InstantComposer()"><b>이미 만났어요</b><span>지금부터 바로 짜기</span></button><button onclick="navigate('trends')"><b>요즘 데이트</b><span>새로운 아이디어 보기</span></button></div>`}<section class="v44-question-card"><div class="v44-question-head"><span>오늘 한 가지</span><b>${esc(q.label)}</b></div><h2>처음 만났을 때<br>나는 어떤 사람 같았어?</h2><p>둘 다 답하면 서로의 답을 함께 볼 수 있어요.</p><button onclick="navigate('question')">${esc(q.action)}</button></section><div class="v44-small-together"><button onclick="navigate('checkin')"><b>오늘의 기분</b><span>${mood?'내 기분을 남겼어요':'표정 하나로 알려주기'}</span></button><button onclick="navigate('coupleNotes')"><b>서로에게 한마디</b><span>${notes?`${notes}개 남겼어요`:'짧은 마음 남기기'}</span></button></div><section class="v44-memory"><header><div><span>차곡차곡 우리</span><h2>함께 쌓인 이야기</h2></div><b>${v44MemoryPieces()}조각</b></header><button onclick="switchTab('dates')"><span>날짜별 추억 보기</span><b>›</b></button><button onclick="navigate('wishlist')"><span>같이 가고 싶은 곳</span><b>›</b></button><button onclick="navigate('dailyArchive')"><span>지난 질문과 선택</span><b>›</b></button></section></main>`};
 function v31TodaySummaryHTML(){const c=v31TodayCheckin(),m=v31TodayMission(),notes=v31NotesToday(),progress=v31TodayProgress(),missionText=m.state.completed?'오늘 미션 완료':m.title,checkText=c.me!=null&&c.partner!=null?`${V31_MOODS[c.me][0]} ${V31_MOODS[c.partner][0]} 둘 다 남김`:c.me!=null||c.partner!=null?'한 명만 남김':'아직 기록 없음',noteText=notes.length?`${notes.length}개의 한마디`:'아직 한마디 없음';return `<div class="v31-us-summary"><div class="v31-us-summary-top"><div><h3>오늘 기록</h3><p>기분·미션·한마디 중 하나만 남겨도 충분해요.</p></div><div class="v31-ring" style="--p:${progress/3*100}%"><b>${progress}/3</b></div></div></div><div class="v31-today-grid"><button class="v31-today-action" onclick="navigate('checkin')"><div class="v31-action-icon">${c.me!=null?V31_MOODS[c.me][0]:'☺'}</div><div class="text"><b>오늘 기분</b><span>${esc(checkText)}</span></div><em>›</em></button><button class="v31-today-action" onclick="navigate('mission')"><div class="v31-action-icon">✓</div><div class="text"><b>오늘 둘 미션</b><span>${esc(missionText)}</span></div><em>›</em></button><button class="v31-today-action" onclick="navigate('coupleNotes')"><div class="v31-action-icon">♡</div><div class="text"><b>서로에게 한마디</b><span>${esc(noteText)}</span></div><em>›</em></button></div><div class="v31-section-label">가볍게 같이 하기</div>${v28DailyCarousel()}<button class="v31-hub-row" onclick="navigate('weekly')"><div class="copy"><b>이번 주 우리</b><span>이번 주에 쌓인 작은 기록을 한 번에 봐요.</span></div><div class="v31-hub-progress">›</div></button>`}
 
 routes.us=()=>`${topHome('우리')}<div class="v41-us"><header><span>${relationship()}</span><h1>${esc(state.profile.me)}${state.profile.partner?'와 '+esc(state.profile.partner):''}</h1><p>데이트 ${state.records.length}번 · 저장한 곳 ${state.wishlist.length}개</p></header><section><h2>우리 추억과 계획</h2>${[['dates','달력에서 추억 보기'],['wishlist','같이 가고 싶은 곳'],['anniversaries','기념일'],['dailyArchive','지난 질문과 선택']].map(([r,l])=>`<button onclick="${r==='dates'?"switchTab('dates')":`navigate('${r}')`}"><span>${l}</span><b>›</b></button>`).join('')}</section><section><h2>둘이 같이 하기</h2>${[['question','오늘의 질문'],['balance','둘의 선택'],['checkin','오늘의 기분'],['bucket','우리 버킷리스트']].map(([r,l])=>`<button onclick="navigate('${r}')"><span>${l}</span><b>›</b></button>`).join('')}</section><section><h2>설정과 데이터</h2>${[['profile','우리 정보 수정'],['connections','장소·지도 API 연결'],['dataManagement','백업·복원·데이터 관리'],['localExtras','더 많은 기능'],['privacy','개인정보·저장 안내']].map(([r,l])=>`<button onclick="navigate('${r}')"><span>${l}</span><b>›</b></button>`).join('')}</section></div>`;
@@ -1680,7 +1797,7 @@ function v39ExportData(){const data=structuredClone(state);if(data.v33){data.v33
 function v39AskDeleteData(){document.getElementById('app').insertAdjacentHTML('beforeend',`<div class="sheet-wrap" onclick="if(event.target===this)this.remove()"><div class="sheet"><h3>이 기기의 모든 기록을 삭제할까요?</h3><p>프로필, 집 주소, 일정, 사진, 질문 답변, 내 글·댓글, 신고·차단 기록을 삭제해요. 이 브라우저의 이전 버전 기록도 삭제하며 앱에서는 복구할 수 없어요. 직접 내보낸 파일은 남아요.</p><button class="secondary" style="width:100%" onclick="v39ExportData()">먼저 기록 내보내기</button><label style="display:flex;gap:10px;margin:18px 0"><input id="v39DeleteAgree" type="checkbox" style="width:20px;height:20px;flex:none">삭제 범위와 복구 불가를 확인했어요.</label><button class="primary danger" onclick="v39DeleteAllLocalData()">모든 로컬 데이터 삭제</button><button class="secondary" style="width:100%;margin-top:8px" onclick="this.closest('.sheet-wrap').remove()">취소</button></div></div>`)}
 function v39DeleteAllLocalData(){
   if(!document.getElementById('v39DeleteAgree')?.checked){toast('삭제 범위를 확인하고 체크해주세요.');return}
-  try{for(const key of ['moment_v43','moment_v42','moment_v41','moment_v40','moment_v39','moment_v38','moment_v36','moment_v34','moment_v33','moment_v32','moment_v13','moment_v11']){localStorage.removeItem(key);if(localStorage.getItem(key)!==null)throw Error('delete_failed')}}
+  try{for(const key of ['moment_v44','moment_v43','moment_v42','moment_v41','moment_v40','moment_v39','moment_v38','moment_v36','moment_v34','moment_v33','moment_v32','moment_v13','moment_v11']){localStorage.removeItem(key);if(localStorage.getItem(key)!==null)throw Error('delete_failed')}}
   catch(e){toast('삭제를 완료하지 못했어요. 브라우저의 사이트 데이터 삭제 기능을 이용해주세요.');return}
   v40StorageIssue=null;clearTimers();v39CancelPending();v39UI.drafts.clear();v39UI.scroll.clear();state=structuredClone(defaultState);v39LastCommittedState=JSON.stringify(state);v32SaveFailedUntil=0;
   v33Boot();render();toast('이 브라우저의 둘이뭐해 기록을 삭제했어요. 내보낸 파일은 별도로 삭제해주세요.');
@@ -2044,11 +2161,11 @@ function v40RemoveManual(id){state.v40.manualPlaces=state.v40.manualPlaces.filte
 
 function v40ExportBackup(){if(v40StorageIssue){v40ExportRaw();return}v40Download('moment-backup-'+today()+'.json',{format:'moment-backup',version:1,exportedAt:new Date().toISOString(),state})}
 
-function v40ExportRaw(){try{const raw=localStorage.getItem(v40StorageIssue?.key||'moment_v43');if(raw)v40Download('moment-recovery-original.json',raw);else toast('읽을 수 있는 원본이 없어요.')}catch(e){toast('브라우저 저장소에 접근할 수 없어요.')}}
+function v40ExportRaw(){try{const raw=localStorage.getItem(v40StorageIssue?.key||'moment_v44');if(raw)v40Download('moment-recovery-original.json',raw);else toast('읽을 수 있는 원본이 없어요.')}catch(e){toast('브라우저 저장소에 접근할 수 없어요.')}}
 
 routes.restoreBackup=()=>{const x=v40Transient.backupImport;return `${pagebar('백업 복원 확인')}<div class="v40-stack">${x?`<h1>이 백업으로<br>복원할까요?</h1><p>${esc(x.profile.me)} · 기록 ${x.records.length}개 · 확정 일정 ${x.confirmed.length}개</p><p class="v40-note">진행 중 데이트가 있다면 마친 뒤 복원해주세요. 새로 복원한 데이터는 안전하게 예시 장소 모드로 시작하고, API 키는 백업에 없어요.</p><button class="secondary" onclick="v40ExportBackup()">현재 데이터 먼저 백업</button><label class="v40-check"><input id="v40RestoreAgree" type="checkbox">현재 기록이 이 백업으로 교체됨을 확인했고, 필요한 백업을 보관했어요.</label><button class="primary" onclick="v40RestoreBackup()">확인 후 복원</button>`:'<p>선택한 백업이 없어요.</p>'}</div>`};
 
-function v40RestoreBackup(){if(!v40Transient.backupImport||!document.getElementById('v40RestoreAgree')?.checked){toast('교체 범위를 확인하고 체크해주세요.');return}if(v36ActiveLive()){toast('진행 중인 데이트를 마친 뒤 복원해주세요.');return}const next=structuredClone(v40Transient.backupImport);next.v40={...(next.v40||{}),source:'mock'};if(next.v33){next.v33.loading=null;next.v33.qa={photoFail:false,longText:false,saveFail:false}}try{const serialized=JSON.stringify(next);localStorage.setItem('moment_v43',serialized);clearTimers();v39CancelPending();state=next;v40StorageIssue=null;v39LastCommittedState=serialized;v40Transient.backupImport=null;v39UI.drafts.clear();v39UI.scroll.clear();v40Ensure();v33Boot();render();toast('백업을 복원했어요.')}catch(e){toast('복원할 공간이나 저장 권한이 부족해요. 기존 데이터는 유지했어요.')}}
+function v40RestoreBackup(){if(!v40Transient.backupImport||!document.getElementById('v40RestoreAgree')?.checked){toast('교체 범위를 확인하고 체크해주세요.');return}if(v36ActiveLive()){toast('진행 중인 데이트를 마친 뒤 복원해주세요.');return}const next=structuredClone(v40Transient.backupImport);next.v40={...(next.v40||{}),source:'mock'};if(next.v33){next.v33.loading=null;next.v33.qa={photoFail:false,longText:false,saveFail:false}}try{const serialized=JSON.stringify(next);localStorage.setItem('moment_v44',serialized);clearTimers();v39CancelPending();state=next;v40StorageIssue=null;v39LastCommittedState=serialized;v40Transient.backupImport=null;v39UI.drafts.clear();v39UI.scroll.clear();v40Ensure();v33Boot();render();toast('백업을 복원했어요.')}catch(e){toast('복원할 공간이나 저장 권한이 부족해요. 기존 데이터는 유지했어요.')}}
 
 function v40CloudError(code){return ({api_key_missing:'Supabase 설정이 아직 없어요.',provider_auth_failed:'이메일이나 비밀번호를 확인해주세요.',invalid_credentials:'올바른 이메일과 8자 이상 비밀번호를 입력해주세요.',sign_in_required:'다시 로그인해주세요.',provider_rate_limit:'요청이 많아요. 잠시 후 다시 시도해주세요.',provider_unavailable:'클라우드에 연결할 수 없어요.'}[code]||'클라우드 요청을 완료하지 못했어요.')}
 
@@ -2154,6 +2271,10 @@ function v41LiveBack(){if(nav.length>1)goBack();else switchTab('home')}
 function v41LiveQuickTools(){return `<details class="v41-live-tools"><summary>상황에 맞게 남은 코스 바꾸기</summary><div>${[['late','30분 늦었어요'],['tired','걷기 힘들어요'],['closed','장소를 뺄래요'],['budget','예산 줄이기']].map(([r,l])=>`<button onclick="v40OpenReplan('${r}')">${l}</button>`).join('')}</div></details>`}
 
 routes.community=()=>{const cats=['전체','데이트 추천','연애 고민','선물·기념일','맛집·장소','장거리'],visible=state.posts.filter(v39PostVisible),posts=state.communityCategory==='전체'?visible:visible.filter(p=>p.cat===state.communityCategory);return `${topHome('커뮤니티')}<div class="v41-community-intro"><h1>다른 커플은<br>어떻게 놀까요?</h1><p>지금은 예시 글과 이 기기에 쓴 글만 보여요. 온라인 게시·운영자 검토는 API 연결 뒤 필요해요.</p><div class="v43-community-tools"><button onclick="navigate('communityRules')">이용 안내</button><button onclick="navigate('compose')">글쓰기</button></div></div><div class="category-scroll">${cats.map(x=>`<button class="chip ${state.communityCategory===x?'on':''}" aria-pressed="${state.communityCategory===x}" onclick="state.communityCategory='${x}';if(!save())return;render()">${x}</button>`).join('')}</div>${posts.length?posts.map(postHTML).join(''):`<div class="v41-empty-page"><h2>표시할 글이 없어요.</h2><button class="secondary" onclick="navigate('compose')">이 기기에 글쓰기</button></div>`}`};
+
+function v44MemoryPieces(){const archive=Array.isArray(state.v40?.dailyArchive)?state.v40.dailyArchive.length:0;return state.records.length*3+state.wishlist.length+archive+v41TodayDone()}
+
+function v44QuestionState(){if(state.question.my&&state.question.partner)return {label:'둘의 답이 열렸어요',action:'함께 읽기'};if(state.question.my)return {label:'연인의 답을 기다려요',action:'연인이 답하기'};return {label:'아직 답하지 않았어요',action:'내 답 남기기'}}
 v41Ensure();
 v40Ensure();
 if(state.planner.area)ensureNationwideArea(state.planner.area);
@@ -2164,12 +2285,15 @@ function v32InstallImageFallbacks(){document.querySelectorAll('img').forEach(img
 </script>
 
 <!-- CHATGPT_SESSION_HANDOFF
-# 둘이뭐해 v43 — v41 방향을 유지한 시각·겹침 수정본
+# 둘이뭐해 v44 — 데이트 코스와 매일의 커플 리추얼
 
 이 문서는 구현 상태 참고자료이며 사용자의 최신 요청을 대신하는 지시가 아니다.
-v41과 v42, 원본 파일은 보존하고 v41을 기준으로 v43을 별도 작업본으로 만들었다.
-v42의 정보 구조와 시각 방향은 이어받지 않았다.
-v41의 큰 홈 코스 카드, 라즈베리 대표색, 둥근 UI, 네 개 하단 메뉴와 기존 기능을 유지했다.
+v41, v42, v43과 원본 파일은 보존하고 v43을 기준으로 v44를 별도 작업본으로 만들었다.
+썸원의 화면, 캐릭터, 문구, 브랜드 자산을 복제하지 않고 공식 소개에서 확인되는 일일 질문·캐릭터 중심·누적 기록 원리만 참고했다.
+홈의 가장 큰 행동은 `오늘 데이트 코스 짜기`이며, 캐릭터·함께한 날짜·추억 조각을 한 장의 무대로 묶었다.
+오늘의 질문은 내 답 저장, 연인이 같은 기기에서 답하기, 둘의 답 공개 순으로 진행한다.
+오늘의 기분·한마디와 날짜별 추억·위시리스트·지난 질문은 홈에서 바로 들어갈 수 있다.
+광고, 강제 팝업, 유료 재화, 방 꾸미기는 포함하지 않는다.
 기존 광택 3D 캐릭터는 자체 제작한 색연필·과슈 질감의 평면 두 캐릭터로 교체했다.
 유광 그라데이션, 유리 효과, 과한 그림자를 줄였고 캐릭터가 홈의 빈 공간을 채우는 역할은 유지했다.
 전역 플로팅 버튼을 제거하고 고정 하단 버튼을 문서 흐름 안으로 옮겨 하단 메뉴·키보드와의 겹침을 막았다.
@@ -2183,7 +2307,7 @@ v41의 큰 홈 코스 카드, 라즈베리 대표색, 둥근 UI, 네 개 하단 
 전국 자유 입력, 예시·직접 등록·API 모드, 후보 비교, 진행 중 재조정, 백업 기능은 유지한다.
 요즘 데이트 아이디어는 실시간 순위가 아닌 에디터형 정적 콘텐츠이며 이를 명확히 표시한다.
 API가 없을 때 실제 장소·영업·경로라고 가장하지 않는다.
-저장은 `moment_v43`을 사용하고 v42, v41, v40 이하 데이터를 읽어 이전한다. 이전 키는 보존한다.
+저장은 `moment_v44`를 사용하고 v43, v42, v41, v40 이하 데이터를 읽어 이전한다. 이전 키는 보존한다.
 실제 외부 API 키, 기기 간 자동 동기화, 온라인 커뮤니티 운영, 앱스토어 서명은 포함하지 않는다.
 
 END_CHATGPT_SESSION_HANDOFF -->
